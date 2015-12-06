@@ -153,7 +153,7 @@ class LyndonTest(unittest.TestCase):
     
     def testNotLyndon(self):
         """Test that words that are not Lyndon words aren't claimed to be."""
-        nl = sum(1 for i in range(8**4) if isLyndonWord("%04o" % i))
+        nl = sum(1 for i in range(8**4) if isLyndonWord("{0:04o}".format(i)))
         self.assertEqual(nl,CountLyndonWords(8,4))
 
     def testDeBruijn(self):

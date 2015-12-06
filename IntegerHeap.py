@@ -103,7 +103,7 @@ class FlatHeap:
     def _rangecheck(self,x):
         """Make sure x is a number we can include in this FlatHeap."""
         if x < 0 or x > self._max:
-            raise ValueError("FlatHeap: %s out of range" % repr(x))
+            raise ValueError("FlatHeap: {0!s} out of range".format(repr(x)))
 
     def __nonzero__(self):
         """True if this heap is nonempty, false if empty."""

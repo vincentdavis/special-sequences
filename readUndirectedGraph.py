@@ -35,7 +35,7 @@ def graphNum(s):
 	try:
 		return int(s)
 	except:
-		raise GraphFormatError, 'Number expected: "%s"' % s
+		raise GraphFormatError, 'Number expected: "{0!s}"'.format(s)
 
 def graph():
 	"""Create a new empty graph."""
@@ -50,11 +50,11 @@ def vertex(G, v):
 def edge(G,u,v,e):
 	"""Add edge e connecting vertices u and v in graph G.  Vertices must already be in G."""
 	if u == v:
-		raise GraphFormatError, 'Self-loop at %s' % str(u)
+		raise GraphFormatError, 'Self-loop at {0!s}'.format(str(u))
 	if u not in G:
-		raise GraphFormatError, 'Unexpected vertex %s in edge to %s' % (str(u),str(v))
+		raise GraphFormatError, 'Unexpected vertex {0!s} in edge to {1!s}'.format(str(u), str(v))
 	if v not in G:
-		raise GraphFormatError, 'Unexpected vertex %s in edge from %s' % (str(v),str(u))
+		raise GraphFormatError, 'Unexpected vertex {0!s} in edge from {1!s}'.format(str(v), str(u))
 	G[u][v] = G[v][u] = e
 
 
@@ -100,9 +100,9 @@ def readEdgeList(lines):
 	for line in filter(None,lines):
 		words = line.split()
 		if len(words) < 2 or len(words) > 3:
-			raise GraphFormatError, 'Wrong number of words in edge list: "%s"' % line
+			raise GraphFormatError, 'Wrong number of words in edge list: "{0!s}"'.format(line)
 		if len(words) == 3 and words[1] != '-':
-			raise GraphFormatError, 'Unrecognized edge type "%s" in edge list' % words[1]
+			raise GraphFormatError, 'Unrecognized edge type "{0!s}" in edge list'.format(words[1])
 		u, v = words[0], words[-1]
 		if u not in G:
 			vertex(G, u)
@@ -142,7 +142,7 @@ def readNodeEdgeList(lines):
 	def namedEdge(line):
 		id = line
 		if id in EdgeNames:
-			raise GraphFormatError, 'Edge name "%s" used twice in node edge list' % id
+			raise GraphFormatError, 'Edge name "{0!s}" used twice in node edge list'.format(id)
 		addEdge(next(lines), id)
 		EdgeNames[id] = id
 		
@@ -161,7 +161,7 @@ def readNodeEdgeList(lines):
 			try:
 				action = actions[line[3:]]
 			except KeyError:
-				raise GraphFormatError, 'Unrecognized section "%s" in node edge list' % line[3:]
+				raise GraphFormatError, 'Unrecognized section "{0!s}" in node edge list'.format(line[3:])
 		else:
 			action(line)
 
@@ -183,7 +183,7 @@ def readGraphML(lines):
 		context.append(name)
 		if len(context) == 1:
 			if name != 'graphml':
-				raise GraphFormatError, 'Unrecognized outer tag "%s" in GraphML' % name
+				raise GraphFormatError, 'Unrecognized outer tag "{0!s}" in GraphML'.format(name)
 		elif len(context) == 2 and name == 'graph':
 			if 'edgedefault' not in attrs:
 				raise GraphFormatError, 'Required attribute edgedefault missing in GraphML'
@@ -241,7 +241,7 @@ def readGraph6(str):
 	n, data = graph6n(data)
 	nd = (n*(n-1)//2 + 5) // 6
 	if len(data) != nd:
-		raise GraphFormatError, 'Expected %d bits but got %d in graph6' % (n*(n-1)//2, len(data)*6)
+		raise GraphFormatError, 'Expected {0:d} bits but got {1:d} in graph6'.format(n*(n-1)//2, len(data)*6)
 
 	def bits():
 		"""Return sequence of individual bits from 6-bit-per-value list of data values."""
@@ -339,12 +339,12 @@ def readLeda(lines):
 	for i in range(m):
 		words = next(lines).split()
 		if len(words) < 4:
-			raise GraphFormatError, 'Too few fields in LEDA.GRAPH edge %d' % (i+1)
+			raise GraphFormatError, 'Too few fields in LEDA.GRAPH edge {0:d}'.format((i+1))
 		source = graphNum(words[0])
 		target = graphNum(words[1])
 		reversal = graphNum(words[2])
 		if not reversal:
-			raise GraphFormatError, 'Edge %d is directed in LEDA.GRAPH' % (i+1)
+			raise GraphFormatError, 'Edge {0:d} is directed in LEDA.GRAPH'.format((i+1))
 		if source < target:
 			edge(G, source, target, i+1)
 	
