@@ -8,6 +8,7 @@ def de_bruijn(k, n):
     """
     a = [0] * k * n
     sequence = []
+
     def db(t, p,):
         if t > n:
             if n % p == 0:
@@ -20,10 +21,11 @@ def de_bruijn(k, n):
                 a[t] = j
                 db(t + 1, t)
     db(1, 1)
-    #return sequence  #original
+    # return sequence  #original
     return ''.join([str(i) for i in sequence])
 
 ################
+
 def de_bruijn_strings(k, n):
     """
     De Bruijn sequence for alphabet size k (0,1,2...k-1)
@@ -34,6 +36,7 @@ def de_bruijn_strings(k, n):
     global a
     a = '0' * k * n
     sequence = ''
+
     def db(t, p):
         global sequence
         global a
@@ -42,10 +45,10 @@ def de_bruijn_strings(k, n):
                 for j in range(1, p + 1):
                     sequence = sequence + a[j]
         else:
-            a = a[:t] + a[t - p]  + a[t+1:]
+            a = a[:t] + a[t - p] + a[t+1:]
             db(t + 1, p)
             for j in range(int(a[t - p]) + 1, k):
-                a = a[:t] + str(j)  + a[t+1:]
+                a = a[:t] + str(j) + a[t+1:]
                 db(t + 1, t)
         return sequence
     db(1, 1)
@@ -62,6 +65,7 @@ def de_bruijn_bytes(k, n):
     a = k * n * bytearray([0])
     sequence = bytearray()
     extend = sequence.extend
+
     def db(t, p):
         if t > n:
             if n % p == 0:
