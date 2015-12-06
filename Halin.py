@@ -22,7 +22,7 @@ def isK4(G):
             return False
     return True
 
-def D3reducible(G,triangleHooks=[],pathHooks=[],finalize=isK4):
+def D3reducible(G,triangleHooks=None,pathHooks=None,finalize=isK4):
     """Test if the graph G is D3-reducible.
 
     Whenever a reduction is found, the hook functions are
@@ -40,6 +40,10 @@ def D3reducible(G,triangleHooks=[],pathHooks=[],finalize=isK4):
     the return value for the overall computation.
     By default the return value is a Boolean that is true
     whenever the irreducible graph is K4."""
+    if triangleHooks is None:
+        triangleHooks = []
+    if pathHooks is None:
+        pathHooks = []
     if not isUndirected(G):
         raise TypeError("Argument to D3reducible must be an undirected graph")
     G = copyGraph(G)        # We are going to change G, so make a copy of it
@@ -180,12 +184,16 @@ def isOuterK4(G,outer):
             return True
     return False
 
-def isHalin(G,triangleHooks=[],pathHooks=[],finalize=isOuterK4):
+def isHalin(G,triangleHooks=None,pathHooks=None,finalize=isOuterK4):
     """Test if the graph G is Halin.
     The two hook arguments are the same as for D3reducible,
     but the finalize argument takes two parameters:
     the final graph (as for D3reducible) and a set of
     vertices that have been marked as outer."""
+    if triangleHooks is None:
+        triangleHooks = []
+    if pathHooks is None:
+        pathHooks = []
     outer = set()           # Vertices that must be on the outer face
     
     def triangle(u,v,w,Nu,Nv,Nw,x):
@@ -301,13 +309,21 @@ def D3HamiltonianCycle(G):
 #     Additional reduction rules for other graph classes
 # ============================================================
 
-def isDual3Tree(G,triangleHooks=[],pathHooks=[],finalize=isK4):
+def isDual3Tree(G,triangleHooks=None,pathHooks=None,finalize=isK4):
     """Test if the graph G is the dual of a 3-tree."""
+    if triangleHooks is None:
+        triangleHooks = []
+    if pathHooks is None:
+        pathHooks = []
     def noPath(u,v,w,x): return False
     return D3reducible(G,triangleHooks,[noPath],finalize)
 
-def isWheel(G,triangleHooks=[],pathHooks=[],finalize=isK4):
+def isWheel(G,triangleHooks=None,pathHooks=None,finalize=isK4):
     """Test if the graph G is a wheel."""
+    if triangleHooks is None:
+        triangleHooks = []
+    if pathHooks is None:
+        pathHooks = []
     def noTriangle(u,v,w,Nu,Nv,Nw,x): return False
     return D3reducible(G,[noTriangle],pathHooks,finalize)
 

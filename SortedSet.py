@@ -23,8 +23,10 @@ class SortedSet:
     with an update() method that tells the set that a single item's position in the order might
     have changed."""
     
-    def __init__(self,iterable=[],comparison=None):
+    def __init__(self,iterable=None,comparison=None):
         """Create a new sorted set with the given comparison function."""
+        if iterable is None:
+                iterable = []
         self._comparison = comparison
         self._set = set(iterable)
         self._previous = None
