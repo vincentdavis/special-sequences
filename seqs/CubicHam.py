@@ -9,8 +9,8 @@ import unittest
 from CardinalityMatching import matching
 from Graphs import *
 
-from specialseqs.Biconnectivity import isBiconnected
-from specialseqs.Util import arbitrary_item, map_to_constant
+from seqs.Biconnectivity import isBiconnected
+from seqs.Util import arbitrary_item, map_to_constant
 
 
 def HamiltonianCycles(G):

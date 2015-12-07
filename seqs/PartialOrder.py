@@ -9,7 +9,7 @@ import unittest
 
 import BipartiteMatching
 
-from specialseqs.DFS import preorder,postorder
+from seqs.DFS import preorder,postorder
 
 
 def isTopologicalOrder(G,L):

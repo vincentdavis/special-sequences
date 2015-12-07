@@ -7,7 +7,7 @@ D. Eppstein, UC Irvine, September 6, 2003.
 
 from Util import arbitrary_item
 
-from specialseqs.UnionFind import UnionFind
+from seqs.UnionFind import UnionFind
 
 
 def matching(G, initialMatching = None):

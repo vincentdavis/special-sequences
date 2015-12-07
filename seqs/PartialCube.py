@@ -13,7 +13,7 @@ from Graphs import isUndirected
 from UnionFind import UnionFind
 
 from specialseqs import BFS
-from specialseqs.StrongConnectivity import StronglyConnectedComponents
+from seqs.StrongConnectivity import StronglyConnectedComponents
 
 
 def PartialCubeEdgeLabeling(G):

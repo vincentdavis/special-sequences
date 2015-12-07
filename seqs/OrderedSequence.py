@@ -8,7 +8,7 @@ D. Eppstein, November 2003.
 
 import sys
 
-from specialseqs.Sequence import Sequence
+from seqs.Sequence import Sequence
 
 
 class SimpleOrderedSequence(Sequence):

@@ -10,7 +10,7 @@ import unittest
 import DFS
 from Graphs import isUndirected
 
-from specialseqs.PartialOrder import TopologicalOrder
+from seqs.PartialOrder import TopologicalOrder
 
 disconnected = object() # flag for BiconnectedComponents
 

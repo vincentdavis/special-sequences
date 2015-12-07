@@ -11,8 +11,8 @@ D. Eppstein, November 2003.
 
 from Util import arbitrary_item
 
-from specialseqs.PartitionRefinement import PartitionRefinement
-from specialseqs.Sequence import Sequence
+from seqs.PartitionRefinement import PartitionRefinement
+from seqs.Sequence import Sequence
 
 
 def LexBFS(G):

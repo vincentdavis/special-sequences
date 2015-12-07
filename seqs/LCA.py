@@ -18,7 +18,7 @@ import random
 import unittest
 from collections import defaultdict
 
-from specialseqs.UnionFind import UnionFind
+from seqs.UnionFind import UnionFind
 
 # 2to3 compatibility
 try:

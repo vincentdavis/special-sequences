@@ -36,8 +36,8 @@ import unittest
 from Graphs import copyGraph
 from Not import Not,SymbolicNegation
 
-from specialseqs.AcyclicReachability import Reachability
-from specialseqs.StrongConnectivity import Condensation
+from seqs.AcyclicReachability import Reachability
+from seqs.StrongConnectivity import Condensation
 
 
 def Symmetrize(G):

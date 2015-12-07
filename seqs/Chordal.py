@@ -13,7 +13,7 @@ import unittest
 
 from Graphs import isUndirected
 
-from specialseqs.LexBFS import LexBFS
+from seqs.LexBFS import LexBFS
 
 
 def PerfectEliminationOrdering(G):

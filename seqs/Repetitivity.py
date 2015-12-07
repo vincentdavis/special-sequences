@@ -8,7 +8,7 @@ D. Eppstein, July 2005.
 """
 
 from specialseqs import DFS
-from specialseqs.StrongConnectivity import StronglyConnectedComponents
+from seqs.StrongConnectivity import StronglyConnectedComponents
 
 
 class NonrepetitiveGraph:
