@@ -111,7 +111,7 @@ class FlatHeap:
 
     def __bool__(self):
         """True if this heap is nonempty, false if empty."""
-        return not (self._min is None)
+        return self._min is not None
 
     def min(self):
         """Return the minimum value in the heap."""
