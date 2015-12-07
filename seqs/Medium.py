@@ -170,7 +170,7 @@ def StateTransitionGraph(M):
             St = M(S,t)
             if St != S:
                 if St in G[S]:
-                    raise MediumError("multiple adjacency from %s to %s" % (S,St))
+                    raise MediumError("multiple adjacency from {0!s} to {1!s}".format(S, St))
                 G[S][St] = t
     return G
 
@@ -192,7 +192,7 @@ class LabeledGraphMedium(Medium):
             for w in G[v]:
                 t = G[v][w]
                 if t in self._action[v]:
-                    raise MediumError("multiple edges for state %s and token %s" % (v,t))
+                    raise MediumError("multiple edges for state {0!s} and token {1!s}".format(v, t))
                 self._action[v][t] = w
                 if t not in self._reverse:
                     rt = G[w][v]
@@ -257,7 +257,7 @@ def RoutingTable(M):
         while True:
             i += 1
             if i >= len(activeTokens):
-                raise MediumError("no active token from %s to %s" %(S,current))
+                raise MediumError("no active token from {0!s} to {1!s}".format(S, current))
             if activeTokens[i] != inactivated and M(S,activeTokens[i]) != S:
                 activeForState[S] = i
                 statesForPos[i].append(S)
