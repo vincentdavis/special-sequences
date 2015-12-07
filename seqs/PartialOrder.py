@@ -7,9 +7,9 @@ D. Eppstein, July 2006.
 
 import unittest
 
-import BipartiteMatching
+import seqs.BipartiteMatching
 
-from seqs.DFS import preorder,postorder
+from seqs.DFS import preorder, postorder
 
 
 def isTopologicalOrder(G,L):

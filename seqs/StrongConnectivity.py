@@ -15,7 +15,7 @@ D. Eppstein, July 2005.
 
 import unittest
 
-from specialseqs import DFS
+from seqs import DFS
 
 
 class StronglyConnectedComponents(DFS.Searcher):
