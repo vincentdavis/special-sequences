@@ -10,8 +10,11 @@ D. Eppstein, November 2003.
 """
 
 import unittest
-from LexBFS import LexBFS
+
 from Graphs import isUndirected
+
+from specialseqs.LexBFS import LexBFS
+
 
 def PerfectEliminationOrdering(G):
     """Return a perfect elimination ordering, or raise an exception if not chordal.

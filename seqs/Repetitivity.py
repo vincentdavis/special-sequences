@@ -7,8 +7,9 @@ consecutive edges have the same label.
 D. Eppstein, July 2005.
 """
 
-from StrongConnectivity import StronglyConnectedComponents
-import DFS
+from specialseqs import DFS
+from specialseqs.StrongConnectivity import StronglyConnectedComponents
+
 
 class NonrepetitiveGraph:
     """
@@ -118,7 +119,7 @@ class NonrepetitiveGraph:
         """Yield pairs (w,label) on nonrepetitive paths from v,L."""
         if v not in self or L not in self[v]:
             return
-        for w,LL,bit in DFS.preorder(self.nrg,(v,L,False)):
+        for w,LL,bit in DFS.preorder(self.nrg, (v, L, False)):
             if bit and LL in self[w]:
                 yield w,LL
 

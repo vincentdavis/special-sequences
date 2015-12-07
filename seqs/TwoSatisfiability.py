@@ -32,10 +32,13 @@ D. Eppstein, April 2009.
 """
 
 import unittest
-from Not import Not,SymbolicNegation
+
 from Graphs import copyGraph
-from StrongConnectivity import Condensation
-from AcyclicReachability import Reachability
+from Not import Not,SymbolicNegation
+
+from specialseqs.AcyclicReachability import Reachability
+from specialseqs.StrongConnectivity import Condensation
+
 
 def Symmetrize(G):
     """Expand implication graph to a larger symmetric form.

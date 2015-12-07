@@ -5,9 +5,12 @@ D. Eppstein, May 2004.
 """
 
 import unittest
-from Biconnectivity import BiconnectedComponents
+
 import Graphs
-import DFS
+from Biconnectivity import BiconnectedComponents
+
+from specialseqs import DFS
+
 
 class NonBipartite(Exception):
     pass

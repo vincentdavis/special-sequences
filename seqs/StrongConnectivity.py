@@ -14,7 +14,9 @@ D. Eppstein, July 2005.
 """
 
 import unittest
-import DFS
+
+from specialseqs import DFS
+
 
 class StronglyConnectedComponents(DFS.Searcher):
     """
@@ -39,7 +41,7 @@ class StronglyConnectedComponents(DFS.Searcher):
         self._graph = G
 
         # perform the Depth First Search
-        DFS.Searcher.__init__(self,G)
+        DFS.Searcher.__init__(self, G)
 
         # clean up now-useless data structures
         del self._dfsnumber, self._activelen, self._active, self._low

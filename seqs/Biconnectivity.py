@@ -6,11 +6,11 @@ D. Eppstein, April 2004.
 """
 
 import unittest
-from Graphs import isUndirected
-from Util import arbitrary_item
-from PartialOrder import TopologicalOrder
 
 import DFS
+from Graphs import isUndirected
+
+from specialseqs.PartialOrder import TopologicalOrder
 
 disconnected = object() # flag for BiconnectedComponents
 
@@ -37,7 +37,7 @@ class BiconnectedComponents(DFS.Searcher):
         self._ancestors = {} # directed subgraph from nodes to DFS ancestors
 
         # perform the Depth First Search
-        DFS.Searcher.__init__(self,G)
+        DFS.Searcher.__init__(self, G)
 
         # clean up now-useless data structures
         del self._dfsnumber, self._activelen, self._active
@@ -101,7 +101,7 @@ class BiconnectivityTester(DFS.Searcher):
         self._dfsnumber = {}
         self._low = {}
         self._rootedge = None
-        DFS.Searcher.__init__(self,G)
+        DFS.Searcher.__init__(self, G)
 
     def preorder(self,parent,child):
         if parent == child and self._rootedge:
@@ -156,7 +156,7 @@ class stOrienter(DFS.Searcher):
         self.roots = [] # edges with no predecessor
 
         # perform the Depth First Search
-        DFS.Searcher.__init__(self,G)
+        DFS.Searcher.__init__(self, G)
 
         # clean up now-useless data structures
         del self._dfsnumber, self._low, self._down, self._lowv

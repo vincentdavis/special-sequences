@@ -6,7 +6,8 @@ D. Eppstein, January 2015.
 """
 
 import unittest
-from Graphs import copyGraph, isUndirected
+
+from specialseqs.Graphs import copyGraph, isUndirected
 
 
 # ============================================================

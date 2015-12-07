@@ -6,8 +6,11 @@ D. Eppstein, July 2006.
 """
 
 import unittest
-from DFS import preorder,postorder
+
 import BipartiteMatching
+
+from specialseqs.DFS import preorder,postorder
+
 
 def isTopologicalOrder(G,L):
     """Check that L is a topological ordering of directed graph G."""

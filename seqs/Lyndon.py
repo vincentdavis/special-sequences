@@ -3,7 +3,9 @@ Algorithms on strings and sequences based on Lyndon words.
 David Eppstein, October 2011."""
 
 import unittest
-from Eratosthenes import MoebiusFunction
+
+from specialseqs.Eratosthenes import MoebiusFunction
+
 
 def LengthLimitedLyndonWords(s,n):
     """Generate nonempty Lyndon words of length <= n over an s-symbol alphabet.

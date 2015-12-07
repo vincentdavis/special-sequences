@@ -4,8 +4,10 @@ Kruskal's algorithm for minimum spanning trees. D. Eppstein, April 2006.
 """
 
 import unittest
-from UnionFind import UnionFind
-from Graphs import isUndirected
+
+from specialseqs.Graphs import isUndirected
+from specialseqs.UnionFind import UnionFind
+
 
 def MinimumSpanningTree(G):
     """

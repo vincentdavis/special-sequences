@@ -5,13 +5,16 @@ Test whether a graph is an isometric subgraph of a hypercube.
 D. Eppstein, September 2005, rewritten May 2007 per arxiv:0705.1025.
 """
 
-import BFS
+import unittest
+
 import Medium
 from Bipartite import isBipartite
-from UnionFind import UnionFind
-from StrongConnectivity import StronglyConnectedComponents
 from Graphs import isUndirected
-import unittest
+from UnionFind import UnionFind
+
+from specialseqs import BFS
+from specialseqs.StrongConnectivity import StronglyConnectedComponents
+
 
 def PartialCubeEdgeLabeling(G):
     """
@@ -72,7 +75,7 @@ def PartialCubeEdgeLabeling(G):
             i += 1
 
         # Breadth first search to propagate bitvectors to the rest of the graph
-        for LG in BFS.BreadthFirstLevels(CG,root):
+        for LG in BFS.BreadthFirstLevels(CG, root):
             for v in LG:
                 for w in LG[v]:
                     bitvec[w] |= bitvec[v]
@@ -155,7 +158,7 @@ class PartialCubeTest(unittest.TestCase):
     # make medium from all five-bit numbers that have 2 or 3 bits lit
     twobits = [3,5,6,9,10,12,17,18,20,24]
     threebits = [31^x for x in twobits]
-    M523 = Medium.BitvectorMedium(twobits+threebits,5)
+    M523 = Medium.BitvectorMedium(twobits + threebits, 5)
 
     def testIsPartialCube(self):
         M = PartialCubeTest.M523

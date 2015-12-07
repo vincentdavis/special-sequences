@@ -15,7 +15,9 @@ D. Eppstein, April 2009.
 """
 
 import unittest
-from PartialOrder import TopologicalOrder
+
+from specialseqs.PartialOrder import TopologicalOrder
+
 
 class Reachability:
     def __init__(self,G):

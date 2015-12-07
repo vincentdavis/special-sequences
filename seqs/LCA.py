@@ -14,9 +14,11 @@ it uses as a subroutine.
 D. Eppstein, November 2003.
 """
 
-import unittest,random
+import random
+import unittest
 from collections import defaultdict
-from UnionFind import UnionFind
+
+from specialseqs.UnionFind import UnionFind
 
 # 2to3 compatibility
 try:

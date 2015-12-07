@@ -21,10 +21,14 @@ theory of finite automata.
 
 D. Eppstein, May 2007.
 """
-    
-import BFS,DFS
-from Graphs import isUndirected
+
 import unittest
+
+import BFS
+from Graphs import isUndirected
+
+from specialseqs import DFS
+
 
 class MediumError(ValueError): pass
 
@@ -233,7 +237,7 @@ def RoutingTable(M):
 
     # find list of tokens that lead to the initial state
     activeTokens = set()
-    for LG in BFS.BreadthFirstLevels(G,initialState):
+    for LG in BFS.BreadthFirstLevels(G, initialState):
         for v in LG:
             for w in LG[v]:
                 activeTokens.add(G[w][v])
@@ -267,7 +271,7 @@ def RoutingTable(M):
     # traverse the graph, maintaining active tokens
     visited = set()
     routes = {}
-    for prev,current,edgetype in DFS.search(G,initialState):
+    for prev,current,edgetype in DFS.search(G, initialState):
         if prev != current and edgetype != DFS.nontree:
             if edgetype == DFS.reverse:
                 prev,current = current,prev

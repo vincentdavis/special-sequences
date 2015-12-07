@@ -5,10 +5,13 @@ D. Eppstein, April 2004.
 """
 
 import unittest
-from Graphs import *
-from Biconnectivity import isBiconnected
+
 from CardinalityMatching import matching
-from Util import arbitrary_item, map_to_constant
+from Graphs import *
+
+from specialseqs.Biconnectivity import isBiconnected
+from specialseqs.Util import arbitrary_item, map_to_constant
+
 
 def HamiltonianCycles(G):
     """

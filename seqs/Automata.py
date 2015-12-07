@@ -6,14 +6,14 @@ deterministic finite automata, and nondeterministic finite automata.
 D. Eppstein, UC Irvine, November 2003.
 """
 
-from Util import arbitrary_item
-
-import sys
 import operator
+import sys
 import unittest
 
-from PartitionRefinement import PartitionRefinement
-from Sequence import Sequence
+from Util import arbitrary_item
+
+from specialseqs.PartitionRefinement import PartitionRefinement
+from specialseqs.Sequence import Sequence
 
 # Hack for Python 3 compatibility
 try:

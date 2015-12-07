@@ -7,7 +7,9 @@ D. Eppstein, November 2003.
 """
 
 import sys
-from Sequence import Sequence
+
+from specialseqs.Sequence import Sequence
+
 
 class SimpleOrderedSequence(Sequence):
     """Maintain a sequence of items subject to insertions, removals,
