@@ -17,13 +17,15 @@ class Sequence:
     takes time proportional to the index.
     """
 
-    def __init__(self, iterable=[], key=None):
+    def __init__(self, iterable=None, key=None):
         """We represent the sequence as a doubly-linked circular linked list,
         stored in two dictionaries, self._next and self._prev.  We also store
         a pointer self._first to the first item in the sequence.  If key is
         supplied, key(x) is used in place of x to look up item positions;
         e.g. using key=id allows sequences of lists or sets.
         """
+        if iterable is None:
+                iterable = []
         self._key = key
         self._items = {}
         self._next = {}
