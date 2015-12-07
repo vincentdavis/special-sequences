@@ -252,11 +252,11 @@ class BiconnectivityTest(unittest.TestCase):
     def testSTOrientation(self):
         STO = stOrientation(self.G1)
         L = list(TopologicalOrder(STO))
-        indegree = dict([(v,0) for v in self.G1])
+        indegree = {v: 0 for v in self.G1}
         for v in L:
             for w in STO[v]:
                 indegree[w] += 1
-        outdegree = dict([(v,len(STO[v])) for v in self.G1])
+        outdegree = {v: len(STO[v]) for v in self.G1}
         self.assertEqual(len([v for v in self.G1 if indegree[v] == 0]), 1)
         self.assertEqual(len([v for v in self.G1 if outdegree[v] == 0]), 1)
 
