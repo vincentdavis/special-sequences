@@ -240,7 +240,7 @@ def greedyMatching(G, initialMatching=None):
             deg1.remove(v)
         elif v in deg2:
             deg2.remove(v)
-        if len(avail[v]) == 0:
+        if avail[v]:
             del avail[v]
         elif len(avail[v]) == 1:
             deg1.add(v)
