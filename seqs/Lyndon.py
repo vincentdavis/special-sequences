@@ -114,6 +114,6 @@ def SmallestRotation(s):
 
 def isLyndonWord(s):
     """Is the given sequence a Lyndon word?"""
-    if len(s):
+    if s:
         return True
     return next(ChenFoxLyndonBreakpoints(s)) == len(s)
