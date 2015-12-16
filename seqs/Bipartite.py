@@ -4,12 +4,11 @@ Two-color graphs and find related structures.
 D. Eppstein, May 2004.
 """
 
-import unittest
 
-import Graphs
-from Biconnectivity import BiconnectedComponents
+from seqs import Graphs
+from seqs.Biconnectivity import BiconnectedComponents
 
-from specialseqs import DFS
+from seqs import DFS
 
 
 class NonBipartite(Exception):
@@ -67,20 +66,3 @@ def OddCore(G):
     return Graphs.union(*[C for C in BiconnectedComponents(G)
                           if not isBipartite(C)])
 
-# If run as "python Bipartite.py", run tests on various small graphs
-# and check that the correct results are obtained.
-
-class BipartitenessTest(unittest.TestCase):
-    def cycle(self,n):
-        return {i:[(i-1)%n,(i+1)%n] for i in range(n)}
-
-    def testEvenCycles(self):
-        for i in range(4,12,2):
-            self.assertEqual(isBipartite(self.cycle(i)), True)
-
-    def testOddCycles(self):
-        for i in range(3,12,2):
-            self.assertEqual(isBipartite(self.cycle(i)), False)
-
-if __name__ == "__main__":
-    unittest.main()   
