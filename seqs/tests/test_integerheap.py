@@ -2,9 +2,9 @@ from unittest import TestCase
 from seqs.IntegerHeap import LinearHeap, IntegerHeap
 from random import randrange, seed
 
-class IntegerHeapTest(TestCase):
+class test_IntegerHeap(TestCase):
         seed(1234)
-        def testHeaps(self):
+        def test_Heaps(self):
             o = 5               # do tests on 2^5-bit integers
             N = LinearHeap()
             I = IntegerHeap(o)

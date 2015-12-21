@@ -2,7 +2,7 @@ from unittest import TestCase
 from seqs.Lyndon import CountLyndonWords, LyndonWordsWithLength, LengthLimitedLyndonWords, \
     isLyndonWord, DeBruijnSequence
 
-class LyndonTest(TestCase):
+class test_Lyndon(TestCase):
     def test_Count(self):
         """Test that we count Lyndon words correctly."""
         for s in range(2,7):

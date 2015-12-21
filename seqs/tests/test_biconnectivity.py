@@ -1,7 +1,7 @@
 from unittest import TestCase
 from seqs.Biconnectivity import isBiconnected, stOrientation, BiconnectedComponents, TopologicalOrder
 
-class BiconnectivityTest(TestCase):
+class test_Biconnectivity(TestCase):
     G1 = {
         0: [1,2,5],
         1: [0,5],
@@ -23,18 +23,18 @@ class BiconnectivityTest(TestCase):
         8: [1,3,6],
     }
 
-    def testIsBiconnected(self):
+    def test_IsBiconnected(self):
         """G1 is biconnected but G2 is not."""
         self.assertEqual(isBiconnected(self.G1), True)
         self.assertEqual(isBiconnected(self.G2), False)
 
-    def testBiconnectedComponents(self):
+    def test_BiconnectedComponents(self):
         """G2 has four biconnected components."""
         C = BiconnectedComponents(self.G2)
         CV = sorted(sorted(component.keys()) for component in C)
         self.assertEqual(CV,[[0,2,5],[1,3,6,8],[2,3],[4,7]])
 
-    def testSTOrientation(self):
+    def test_STOrientation(self):
         STO = stOrientation(self.G1)
         L = list(TopologicalOrder(STO))
         indegree = {v: 0 for v in self.G1}
@@ -44,3 +44,4 @@ class BiconnectivityTest(TestCase):
         outdegree = {v: len(STO[v]) for v in self.G1}
         self.assertEqual(len([v for v in self.G1 if indegree[v] == 0]), 1)
         self.assertEqual(len([v for v in self.G1 if outdegree[v] == 0]), 1)
+

@@ -2,7 +2,7 @@ from unittest import TestCase
 from seqs.de_bruijn import de_bruijn, de_bruijn_strings, de_bruijn_bytes
 from seqs.Lyndon import DeBruijnSequence
 
-class TestdeBruijnSeq(TestCase):
+class Test_deBruijnSeq(TestCase):
     # Warning Test result not verified
     seq = '000010002001100120021002201010201110112012101220202110212022102221111211221212222'
 
@@ -18,7 +18,7 @@ class TestdeBruijnSeq(TestCase):
     def test_DeBruijnSequence(self):
         assert ''.join(str(n) for n in DeBruijnSequence(3,4)) == self.seq
 
-    def testDeBruijn(self):
+    def test_DeBruijn(self):
         """Test that the De Bruijn sequence is correct."""
         for s in range(2,7):
             for n in range(1,6):

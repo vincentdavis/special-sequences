@@ -1,7 +1,7 @@
 from unittest import TestCase
 from seqs.AcyclicReachability import Reachability
 
-class ReachabilityTest(TestCase):
+class tes_Reachability(TestCase):
     def test_Reachable(self):
         G = {"A":["C"],"B":["C","D"],"C":["D","E"],"D":[],"E":[]}
         R = Reachability(G)
