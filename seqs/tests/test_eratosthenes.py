@@ -1,5 +1,5 @@
 from unittest import TestCase
-from seqs.Eratosthenes import PracticalNumbers
+from seqs.Eratosthenes import PracticalNumbers, primes
 
 class test_Sieve(TestCase):
     def test_Prime(self):
