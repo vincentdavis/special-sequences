@@ -9,7 +9,7 @@ http://www.cs.colostate.edu/~rmm/lexbfs.ps
 D. Eppstein, November 2003.
 """
 
-from Util import arbitrary_item
+from seqs.Util import arbitrary_item
 
 from seqs.PartitionRefinement import PartitionRefinement
 from seqs.Sequence import Sequence
