@@ -9,8 +9,7 @@ python:
 
 before_install:
   - pip install codecov
-after_success:
-  - codecov
+
   
 # command to install dependencies
 #install: "pip install -r requirements.txt"
@@ -19,3 +18,6 @@ script: nosetests
 
 notifications:
   email: false
+
+after_success:
+  - codecov
