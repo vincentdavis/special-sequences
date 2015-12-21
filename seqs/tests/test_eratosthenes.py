@@ -1,4 +1,7 @@
-class test_Sieve(unittest.TestCase):
+from unittest import TestCase
+from seqs.Eratosthenes import PracticalNumbers
+
+class test_Sieve(TestCase):
     def test_Prime(self):
         """Test that the first few primes are generated correctly."""
         G = primes()

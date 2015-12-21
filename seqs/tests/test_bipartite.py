@@ -1,6 +1,7 @@
 from unittest import TestCase
 from seqs.Bipartite import isBipartite
 
+
 class test_Bipartiteness(TestCase):
     def cycle(self,n):
         return {i:[(i-1)%n,(i+1)%n] for i in range(n)}
