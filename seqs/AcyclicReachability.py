@@ -19,7 +19,7 @@ import unittest
 from seqs.PartialOrder import TopologicalOrder
 
 
-class Reachability:
+class Reachability(object):
     def __init__(self,G):
         """Initialize a reachability data structure for the given DAG."""
         self.key = {}

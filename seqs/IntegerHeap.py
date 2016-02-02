@@ -57,7 +57,7 @@ def Log2(b):
 #   BitVectorHeap
 # ======================================================================
 
-class BitVectorHeap:
+class BitVectorHeap(object):
     """Maintain the minimum of a set of integers using bitvector operations."""
     def __init__(self):
         """Create a new BitVectorHeap."""
@@ -89,7 +89,7 @@ class BitVectorHeap:
 #   FlatHeap
 # ======================================================================
 
-class FlatHeap:
+class FlatHeap(object):
     """Maintain the minimum of a set of 2^i-bit integer values."""
     def __init__(self,i):
         """Create a new FlatHeap for 2^i-bit integers."""
@@ -163,7 +163,7 @@ class FlatHeap:
 # ======================================================================
 
 
-class LinearHeap:
+class LinearHeap(object):
     """Maintain the minimum of a set of integers using a set object."""
     def __init__(self):
         """Create a new BitVectorHeap."""

@@ -33,7 +33,7 @@ def Language(A):
     return A.language()
 
 
-class RegularLanguage:
+class RegularLanguage(object):
     """Object representing the language recognized by a DFA or NFA.
     Available operations are testing whether a string is in the language,
     logical combinations, and subset and equality testing.
@@ -100,7 +100,7 @@ class RegularLanguage:
         return False
 
 
-class FiniteAutomaton:
+class FiniteAutomaton(object):
     """Base class for DFA and NFA.  This class should not be instantiated
     on its own, but dispatches methods that are appropriate to both types
     of automaton by calling .asDFA() or .asNFA() to convert the automaton

@@ -9,7 +9,7 @@ D. Eppstein, November 2003.
 
 class PartitionError(Exception): pass
 
-class PartitionRefinement:
+class PartitionRefinement(object):
     """Maintain and refine a partition of a set of items into subsets.
     Space usage for a partition of n items is O(n), and each refine
     operation takes time proportional to the size of its argument.

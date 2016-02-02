@@ -11,7 +11,7 @@ import sys
 
 class SequenceError(Exception): pass
 
-class Sequence:
+class Sequence(object):
     """Maintain a sequence of items subject to insertions and removals.
     All sequence operations take constant time except indexing, which
     takes time proportional to the index.

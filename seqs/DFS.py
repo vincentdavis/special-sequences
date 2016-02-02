@@ -65,7 +65,7 @@ def reachable(G,v,w):
     """Can we get from v to w in graph G?"""
     return w in preorder(G,v)
 
-class Searcher:
+class Searcher(object):
     """
     Handler for performing general depth first searches of graphs.
     Some or all of the routines preorder, postorder, and backedge

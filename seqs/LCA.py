@@ -82,7 +82,7 @@ class RangeMin:
         """Function to replace LCA when we have too little data."""
         return 0
 
-class RestrictedRangeMin:
+class RestrictedRangeMin(object):
     """Linear-space RangeMin for integer data obeying the constraint
         abs(X[i]-X[i-1])==1.
     We don't actually check this constraint, but results may be incorrect
@@ -150,7 +150,7 @@ class RestrictedRangeMin:
             blockid = blockid*2 + (XX[i] > XX[i-1])
         return blockid
 
-class PrecomputedRangeMin:
+class PrecomputedRangeMin(object):
     """RangeMin solved in quadratic space by precomputing all solutions."""
 
     def __init__(self,X):
@@ -164,7 +164,7 @@ class PrecomputedRangeMin:
     def __len__(self):
         return len(self._minima)
 
-class LogarithmicRangeMin:
+class LogarithmicRangeMin(object):
     """RangeMin in O(n log n) space and constant query time."""
 
     def __init__(self,X):
@@ -183,7 +183,7 @@ class LogarithmicRangeMin:
     def __len__(self):
         return len(self._minima[0])
 
-class LCA:
+class LCA(object):
     """Structure for finding least common ancestors in trees.
     Tree nodes may be any hashable objects; a tree is specified
     by a dictionary mapping nodes to their parents.

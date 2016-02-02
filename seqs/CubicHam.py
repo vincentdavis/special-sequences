@@ -6,8 +6,8 @@ D. Eppstein, April 2004.
 
 import unittest
 
-from CardinalityMatching import matching
-from Graphs import *
+from seqs.CardinalityMatching import matching
+from seqs.Graphs import copyGraph, minDegree, isUndirected, maxDegree
 
 from seqs.Biconnectivity import isBiconnected
 from seqs.Util import arbitrary_item, map_to_constant

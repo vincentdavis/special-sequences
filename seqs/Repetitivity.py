@@ -11,7 +11,7 @@ from specialseqs import DFS
 from seqs.StrongConnectivity import StronglyConnectedComponents
 
 
-class NonrepetitiveGraph:
+class NonrepetitiveGraph(object):
     """
     Data structure for finding nonrepetitive paths in graphs.
     If G is a digraph, with G[v][w] = a collection of labels

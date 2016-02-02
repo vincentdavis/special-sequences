@@ -20,7 +20,7 @@ import unittest
 
 class DoubleNegationError(Exception): pass
 
-class SymbolicNegation:
+class SymbolicNegation(object):
     def __init__(self,x):
         if isinstance(x,SymbolicNegation):
             raise DoubleNegationError(

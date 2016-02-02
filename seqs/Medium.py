@@ -32,7 +32,7 @@ from specialseqs import DFS
 
 class MediumError(ValueError): pass
 
-class Medium:
+class Medium(object):
     """
     Base class for media.
     
