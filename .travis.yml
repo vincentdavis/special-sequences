@@ -7,14 +7,12 @@ python:
   - "pypy"
   - "pypy3"
 
-before_install:
-  - pip install codecov
-
   
 # command to install dependencies
-#install: "pip install -r requirements.txt"
+install:
+  - pip install codecov
 # command to run tests
-script: nosetests
+script: pytest
 
 notifications:
   email: false
