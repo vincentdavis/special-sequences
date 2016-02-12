@@ -12,7 +12,8 @@ python:
 install:
   - pip install codecov
 # command to run tests
-script:   - coverage run pytest
+script:
+  - coverage run pytest
 
 notifications:
   email: false
