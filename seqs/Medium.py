@@ -234,7 +234,7 @@ def RoutingTable(M):
 
     # find list of tokens that lead to the initial state
     activeTokens = set()
-    for LG in BFS.BreadthFirstLevels(G, initialState):
+    for LG in BreadthFirstLevels(G, initialState):
         for v in LG:
             for w in LG[v]:
                 activeTokens.add(G[w][v])
