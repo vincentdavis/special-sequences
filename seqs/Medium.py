@@ -24,7 +24,7 @@ D. Eppstein, May 2007.
 
 from seqs.BFS import BreadthFirstLevels
 from seqs.Graphs import isUndirected
-from seqs.DFS import search, nontree, forward
+from seqs.DFS import search, nontree, forward, reverse
 
 
 class MediumError(ValueError): pass
@@ -268,9 +268,9 @@ def RoutingTable(M):
     # traverse the graph, maintaining active tokens
     visited = set()
     routes = {}
-    for prev,current,edgetype in DFS.search(G, initialState):
-        if prev != current and edgetype != DFS.nontree:
-            if edgetype == DFS.reverse:
+    for prev,current,edgetype in search(G, initialState):
+        if prev != current and edgetype != nontree:
+            if edgetype == reverse:
                 prev,current = current,prev
             
             # add token to end of list, point to it from old state
@@ -303,8 +303,8 @@ def HypercubeEmbedding(M):
             dim += 1
     embed = {}
     G = StateTransitionGraph(M)
-    for prev,current,edgetype in DFS.search(G):
-        if edgetype == DFS.forward:
+    for prev,current,edgetype in search(G):
+        if edgetype == forward:
             if prev == current:
                 embed[current] = 0
             else:
