@@ -253,12 +253,12 @@ class NFA(FiniteAutomaton):
             if not [c for c in self.alphabet if self.transition(state, c)]:
                 adjectives.append("terminal")
             if not adjectives:
-                print ß>> output, state
+                print('ß>> {} , {}'.format(output, state))
             else:
-                print >> output, state, "(" + ", ".join(adjectives) + ")"
+                print('>> {} , {} ({})'.format(output, state, ", ".join(adjectives)))
             for c in self.alphabet:
                 for neighbor in self.transition(state, c):
-                    print >> output, "  --[" + str(c) + "]-->", neighbor
+                    print('>> {} --[{}]--> {}'.format(output, str(c), neighbor))
 
     def RegExp(self):
         """Convert to regular expression and return as a string.
@@ -591,47 +591,3 @@ class _MinimumDFA(DFA):
         rep = arbitrary_item(state)
         return self.DFA.isfinal(rep)
 
-
-# If called as standalone routine, run some unit tests
-
-class RegExpTest(unittest.TestCase):
-    # tuples (L,[strings in L],[strings not in L])
-    languages = [
-        (RegularLanguage("0"), ["0"], ["", "00"]),
-        (RegularLanguage("(10+0)*"), ["", "0", "010"], ["1"]),
-        (RegularLanguage("(0+1)*1(0+1)(0+1)"), ["000100"], ["0011"]),
-    ]
-
-    def testMembership(self):
-        """membership tests for RegularLanguage(expression)"""
-        for L, Li, Lx in self.languages:
-            for S in Li:
-                self.assertTrue(S in L)
-            for S in Lx:
-                self.assertTrue(S not in L)
-
-    def testComplement(self):
-        """membership tests for ~RegularLanguage"""
-        for L, Li, Lx in self.languages:
-            L = ~L
-            for S in Lx:
-                self.assertTrue(S in L)
-            for S in Li:
-                self.assertTrue(S not in L)
-
-    def testEquivalent(self):
-        """test that converting NFA->expr->NFA produces same language"""
-        for L1, Li, Lx in self.languages:
-            L2 = RegularLanguage(L1.recognizer.RegExp())
-            self.assertEqual(L1, L2)
-
-    def testInequivalent(self):
-        """test that different regular languages are recognized as different"""
-        for i in range(len(self.languages)):
-            for j in range(i):
-                self.assertNotEqual(self.languages[i][0],
-                                    self.languages[j][0])
-
-
-if __name__ == "__main__":
-    unittest.main()
