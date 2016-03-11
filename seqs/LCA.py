@@ -299,4 +299,3 @@ def _log2(n):
         _logtable.extend([1+_logtable[-1]]*len(_logtable))
     return _logtable[n]
 
-
