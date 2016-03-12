@@ -5,7 +5,7 @@ Find maximum cardinality matchings in general undirected graphs.
 D. Eppstein, UC Irvine, September 6, 2003.
 """
 
-from Util import arbitrary_item
+from seqs.Util import arbitrary_item
 
 from seqs.UnionFind import UnionFind
 
