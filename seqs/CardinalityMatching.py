@@ -285,6 +285,7 @@ def greedyMatching(G, initialMatching=None):
 
     # loop adding edges or contracting deg2 clusters
     while avail:
+        #print("avail is: {}".format(avail))
         if deg1:
             v = arbitrary_item(deg1)
             w = arbitrary_item(avail[v])
@@ -293,9 +294,14 @@ def greedyMatching(G, initialMatching=None):
             v = arbitrary_item(deg2)
             contract(v)
         else:
+            print('avail is: {}'.format(avail))
+            print('last W is: {}'.format(w))
+            print('W arg is: {}'.format(avail[v]))
             v = arbitrary_item(avail)
-            w = arbitrary_item(avail[v])
-            addMatch(v,w)
+            print('V is: {}'.format(v))
+            if avail[v]:
+                w = arbitrary_item(avail[v])
+                addMatch(v,w)
 
     # at this point the edges listed in d2edges form a matchable tree
     # repeat the degree one part of the algorithm only on those edges
