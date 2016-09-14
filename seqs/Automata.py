@@ -590,4 +590,3 @@ class _MinimumDFA(DFA):
     def isfinal(self, state):
         rep = arbitrary_item(state)
         return self.DFA.isfinal(rep)
-

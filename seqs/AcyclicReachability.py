@@ -20,7 +20,7 @@ from seqs.PartialOrder import TopologicalOrder
 
 
 class Reachability(object):
-    def __init__(self,G):
+    def __init__(self, G):
         """Initialize a reachability data structure for the given DAG."""
         self.key = {}
         self.canReach = []
@@ -28,12 +28,11 @@ class Reachability(object):
         L.reverse()
         for v in L:
             k = self.key[v] = len(self.canReach)
-            bits = 1<<k
+            bits = 1 << k
             for w in G[v]:
                 bits |= self.canReach[self.key[w]]
             self.canReach.append(bits)
 
-    def reachable(self,source,destination):
+    def reachable(self, source, destination):
         """Test whether the DAG has a path from source to destination."""
-        return (1<<self.key[destination])&self.canReach[self.key[source]] != 0
-
+        return (1 << self.key[destination]) & self.canReach[self.key[source]] != 0
