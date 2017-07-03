@@ -8,12 +8,12 @@ class ChordalTest(TestCase):
     quad = {0:[1,3],1:[0,2],2:[1,3],3:[0,2]}
     graphs = [(claw,True), (butterfly,True), (diamond,True), (quad,False)]
     
-    def Chordal_test(self):
+    def test_Chordal(self):
         """Check that Chordal() returns the correct answer on each test graph."""
         for G,isChordal in ChordalTest.graphs:
             self.assertEqual(Chordal(G), isChordal)
 
-    def testElimination(self):
+    def test_Elimination(self):
         """Check that PerfectEliminationOrdering generates an elimination ordering."""
         for G,isChordal in ChordalTest.graphs:
             if isChordal:
