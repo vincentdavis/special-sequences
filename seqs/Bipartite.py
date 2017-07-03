@@ -4,7 +4,6 @@ Two-color graphs and find related structures.
 D. Eppstein, May 2004.
 """
 
-
 from seqs import Graphs
 from seqs.Biconnectivity import BiconnectedComponents
 
@@ -14,6 +13,7 @@ from seqs import DFS
 class NonBipartite(Exception):
     pass
 
+
 def TwoColor(G):
     """
     Find a bipartition of G, if one exists.
@@ -21,12 +21,13 @@ def TwoColor(G):
     to two colors (True and False).
     """
     color = {}
-    for v,w,edgetype in DFS.search(G):
+    for v, w, edgetype in DFS.search(G):
         if edgetype is DFS.forward:
-            color[w] = not color.get(v,False)
+            color[w] = not color.get(v, False)
         elif edgetype is DFS.nontree and color[v] == color[w]:
             raise NonBipartite
     return color
+
 
 def Bipartition(G):
     """
@@ -39,6 +40,7 @@ def Bipartition(G):
         if color[v]:
             yield v
 
+
 def isBipartite(G):
     """
     Return True if G is bipartite, False otherwise.
@@ -49,14 +51,16 @@ def isBipartite(G):
     except NonBipartite:
         return False
 
-def BipartiteOrientation(G,adjacency_list_type=set):
+
+def BipartiteOrientation(G, adjacency_list_type=set):
     """
     Given an undirected bipartite graph G, return a directed graph in which
     the edges are oriented from one side of the bipartition to the other.
     The second argument has the same meaning as in Graphs.copyGraph.
     """
     B = Bipartition(G)
-    return {v:adjacency_list_type(iter(G[v])) for v in B}
+    return {v: adjacency_list_type(iter(G[v])) for v in B}
+
 
 def OddCore(G):
     """
@@ -65,4 +69,3 @@ def OddCore(G):
     """
     return Graphs.union(*[C for C in BiconnectedComponents(G)
                           if not isBipartite(C)])
-

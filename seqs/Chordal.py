@@ -23,7 +23,7 @@ def PerfectEliminationOrdering(G):
     """
     alreadyProcessed = set()
     B = list(LexBFS(G))
-    position = {B[i]:i for i in range(len(B))}
+    position = {B[i]: i for i in range(len(B))}
     leftNeighbors = {}
     parent = {}
     for v in B:

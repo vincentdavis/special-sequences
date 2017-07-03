@@ -35,7 +35,7 @@ def graphNum(s):
 	try:
 		return int(s)
 	except:
-		raise GraphFormatError, 'Number expected: "{0!s}"'.format(s)
+		raise GraphFormatError(f'Number expected: "{s!s}"')
 
 def graph():
 	"""Create a new empty graph."""

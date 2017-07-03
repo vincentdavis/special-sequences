@@ -27,7 +27,7 @@ setup(
     description='Gernerator for interesting sequences and other structures.\n'
                 'Much of the software is from "PADS, a library of Python Algorithms and Data Structures"',
     long_description='Gernerator for interesting sequences and other structures.\n'
-                'Much of the software is from "PADS, a library of Python Algorithms and Data Structures"',
+                     'Much of the software is from "PADS, a library of Python Algorithms and Data Structures"',
 
     # The project's main homepage.
     url='https://github.com/vincentdavis/special-sequences',
@@ -76,7 +76,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    #install_requires=['peppercorn'],
+    # install_requires=['peppercorn'],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
