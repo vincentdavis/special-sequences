@@ -238,7 +238,7 @@ def HalinLeafVertices(G):
                         outer.add(w)    # outerize everything but v
                 break
 
-    def triangle(u, v, w, Nu, Nv, Nw):
+    def triangle(u, v, w, Nu, Nv, Nw, x):
         """Undo a D3a reduction"""
         nout = 0
         for (p,q) in ((u,Nu),(v,Nv),(w,Nw)):
@@ -316,7 +316,7 @@ def isDual3Tree(G,triangleHooks=None,pathHooks=None,finalize=isK4):
         triangleHooks = []
     if pathHooks is None:
         pathHooks = []
-    def noPath(): return False
+    def noPath(u,v,w,x): return False
     return D3reducible(G,triangleHooks,[noPath],finalize)
 
 def isWheel(G,triangleHooks=None,pathHooks=None,finalize=isK4):
