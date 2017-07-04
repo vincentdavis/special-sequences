@@ -24,7 +24,7 @@ class StrongConnectivityTest(TestCase):
 
     knownpairs = [(G1,C1),(G2,C2)]
 
-    def testStronglyConnectedComponents(self):
+    def test_StronglyConnectedComponents(self):
         """Check known graph/component pairs."""
         for (graph,expectedoutput) in self.knownpairs:
             output = [list(C) for C in StronglyConnectedComponents(graph)]
@@ -33,7 +33,7 @@ class StrongConnectivityTest(TestCase):
             output.sort()
             self.assertEqual(output,expectedoutput)
 
-    def testSubgraph(self):
+    def test_Subgraph(self):
         """Check that each SCC is an induced subgraph."""
         for (graph,expectedoutput) in self.knownpairs:
             components = StronglyConnectedComponents(graph)
@@ -42,7 +42,7 @@ class StrongConnectivityTest(TestCase):
                     for w in graph:
                         self.assertEqual(w in graph[v] and w in C, w in C[v])
 
-    def testCondensation(self):
+    def test_Condensation(self):
         """Check that the condensations are what we expect."""
         self.assertEqual(Condensation(self.G1),self.Con1)
         self.assertEqual(Condensation(self.G2),self.Con2)

@@ -4,7 +4,7 @@ from seqs.LCS import LongestCommonSubsequence
 
 
 class LCSTest(TestCase):
-    def testLCS(self):
+    def test_LCS(self):
         A = range(10)
         B = reversed(A)
         self.assertEqual(list(A),LongestCommonSubsequence(A,A))

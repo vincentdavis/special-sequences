@@ -16,7 +16,7 @@ class HalinTest(TestCase):
     for i in range(14,39):
         ternary[i] = ((i-1)//3,i-1,i+1)
 
-    def testD3Reducible(self):
+    def test_D3Reducible(self):
         """Check correct classification of D3-reducible graphs"""
         self.assertEqual(D3reducible(self.cube), False)
         self.assertEqual(D3reducible(self.trunctet), True)
@@ -24,7 +24,7 @@ class HalinTest(TestCase):
         self.assertEqual(D3reducible(self.nonhalin), True)
         self.assertEqual(D3reducible(self.ternary), True)
 
-    def testReductionTypes(self):
+    def test_ReductionTypes(self):
         """Check that the correct reduction types are being applied"""
         self.assertEqual(isWheel(self.trunctet),False)
         self.assertEqual(isWheel(self.wheel),True)
@@ -35,7 +35,7 @@ class HalinTest(TestCase):
         self.assertEqual(isDual3Tree(self.ternary),False)
         self.assertEqual(isDual3Tree(self.nonhalin), False)
 
-    def testHalin(self):
+    def test_Halin(self):
         """Check correct classification of Halin graphs"""
         self.assertEqual(isHalin(self.cube), False)
         self.assertEqual(isHalin(self.trunctet), False)
@@ -45,7 +45,7 @@ class HalinTest(TestCase):
         self.assertEqual(HalinLeafVertices(self.wheel),{1,2,3,4,5})
         self.assertEqual(HalinLeafVertices(self.ternary),set(range(13,40)))
 
-    def testHamiltonian(self):
+    def test_Hamiltonian(self):
         """Check correct construction of Hamiltonian cycle"""
         for G in (self.trunctet,self.wheel,self.nonhalin,self.ternary):
             H = D3HamiltonianCycle(G)

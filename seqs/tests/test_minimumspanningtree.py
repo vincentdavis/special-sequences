@@ -4,7 +4,7 @@ from seqs.MinimumSpanningTree import MinimumSpanningTree
 
 
 class MSTTest(TestCase):
-    def testMST(self):
+    def test_MST(self):
         """Check that MinimumSpanningTree returns the correct answer."""
         G = {0:{1:11,2:13,3:12},1:{0:11,3:14},2:{0:13,3:10},3:{0:12,1:14,2:10}}
         T = [(2,3),(0,1),(0,3)]

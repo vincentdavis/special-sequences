@@ -31,7 +31,7 @@ from seqs.Util import arbitrary_item
 #         # Did we find enough cycles?
 #         self.assertEqual(count,N)
 #
-#     def testCube(self):
+#     def test_Cube(self):
 #         """Cube has six Hamiltonian cycles."""
 #         cube = {i:(i^1,i^2,i^4) for i in range(8)}
 #         self.check(cube,6)
@@ -40,12 +40,12 @@ from seqs.Util import arbitrary_item
 #         """Connect opposite vertices on an even length cycle."""
 #         return {i:((i+1)%n,(i-1)%n,(i+n//2)%n) for i in range(n)}
 #
-#     def testEvenTwistedLadders(self):
+#     def test_EvenTwistedLadders(self):
 #         """twistedLadder(4n) has 2n+1 Hamiltonian cycles."""
 #         for n in range(4,50,4):
 #             self.check(self.twistedLadder(n),n//2+1)
 #
-#     def testOddTwistedLadders(self):
+#     def test_OddTwistedLadders(self):
 #         """twistedLadder(4n+2) has 2n+4 Hamiltonian cycles."""
 #         for n in range(6,50,4):
 #             self.check(self.twistedLadder(n),n//2+3)
@@ -55,7 +55,7 @@ from seqs.Util import arbitrary_item
 #         return {(v,w):{(v,u) for u in G[v] if u != w} | {(w,v)}
 #                 for v in G for w in G[v]}
 #
-#     def testSierpinski(self):
+#     def test_Sierpinski(self):
 #         """
 #         Sierpinski triangle like graphs formed by repeated truncation
 #         of K_4 should all have exactly three Hamiltonian cycles.

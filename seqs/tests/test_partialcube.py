@@ -11,21 +11,21 @@ class PartialCubeTest(TestCase):
     threebits = [31^x for x in twobits]
     M523 = Medium.BitvectorMedium(twobits + threebits, 5)
 
-    def testIsPartialCube(self):
+    def test_IsPartialCube(self):
         M = PartialCubeTest.M523
         G = Medium.StateTransitionGraph(M)
         I = isPartialCube(G)
         self.assertEqual(I,True)
 
-    def testK4(self):
+    def test_K4(self):
         G = {i:[j for j in range(4) if j != i] for i in range(4)}
         self.assertEqual(isPartialCube(G),False)
 
-    def testK33(self):
+    def test_K33(self):
         G = {0:[3,4,5],1:[3,4,5],2:[3,4,5],3:[0,1,2],4:[0,1,2],5:[0,1,2]}
         self.assertEqual(isPartialCube(G),False)
 
-    def testMediumForPartialCube(self):
+    def test_MediumForPartialCube(self):
         """Check that we get an isomorphic medium via MediumForPartialCube."""
         # Note that we do not get the same tokens.
         # So, we need to check equality of graphs
@@ -38,7 +38,7 @@ class PartialCubeTest(TestCase):
         for v in G:
             self.assertEqual(set(G[v]),set(H[v]))
 
-    def test6212(self):
+    def test_6212(self):
         """
         A graph that can be labeled, but is not a partial cube.
         Tests the code in LabeledGraphMedium that checks for the
@@ -53,7 +53,7 @@ class PartialCubeTest(TestCase):
             G[i,3] = [(i,2),((i-b)%n,0),((i-c)%n,0)]
         self.assertEqual(isPartialCube(G),False)
 
-    def test61150(self):
+    def test_61150(self):
         """
         Another graph that can be labeled, but is not a partial cube.
         Tests the code in RoutingTable that makes sure that only tokens

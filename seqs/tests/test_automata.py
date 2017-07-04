@@ -10,7 +10,7 @@ class RegExpTest(TestCase):
         (RegularLanguage("(0+1)*1(0+1)(0+1)"), ["000100"], ["0011"]),
     ]
 
-    def testMembership(self):
+    def test_Membership(self):
         """membership tests for RegularLanguage(expression)"""
         for L, Li, Lx in self.languages:
             for S in Li:
@@ -18,7 +18,7 @@ class RegExpTest(TestCase):
             for S in Lx:
                 self.assertTrue(S not in L)
 
-    def testComplement(self):
+    def test_Complement(self):
         """membership tests for ~RegularLanguage"""
         for L, Li, Lx in self.languages:
             L = ~L
@@ -27,13 +27,13 @@ class RegExpTest(TestCase):
             for S in Li:
                 self.assertTrue(S not in L)
 
-    def testEquivalent(self):
+    def test_Equivalent(self):
         """test that converting NFA->expr->NFA produces same language"""
         for L1, Li, Lx in self.languages:
             L2 = RegularLanguage(L1.recognizer.RegExp())
             self.assertEqual(L1, L2)
 
-    def testInequivalent(self):
+    def test_Inequivalent(self):
         """test that different regular languages are recognized as different"""
         for i in range(len(self.languages)):
             for j in range(i):

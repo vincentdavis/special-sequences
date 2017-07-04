@@ -5,7 +5,7 @@ from seqs.LCA import RangeMin, LCA, LogarithmicRangeMin, OfflineLCA
 
 
 class RandomRangeMinTest(TestCase):
-    def testRangeMin(self):
+    def test_RangeMin(self):
         for trial in range(20):
             data = [random.choice(range(1000000))
                     for i in range(random.randint(1,100))]
@@ -30,17 +30,17 @@ class LCATest(TestCase):
         ('f','i'):'f',
     }
 
-    def testLCA(self):
+    def test_LCA(self):
         L = LCA(self.parent)
         for k,v in self.lcas.items():
             self.assertEqual(L(*k),v)
 
-    def testLogLCA(self):
+    def test_LogLCA(self):
         L = LCA(self.parent, LogarithmicRangeMin)
         for k,v in self.lcas.items():
             self.assertEqual(L(*k),v)
 
-    def testOfflineLCA(self):
+    def test_OfflineLCA(self):
         L = OfflineLCA(self.parent, self.lcas.keys())
         for (p,q),v in self.lcas.items():
             self.assertEqual(L[p][q],v)

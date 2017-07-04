@@ -4,7 +4,7 @@ from seqs.LongestIncreasingSubsequence import LongestIncreasingSubsequence
 
 
 class LISTest(TestCase):
-    def testLIS(self):
+    def test_LIS(self):
         self.assertEqual(LongestIncreasingSubsequence([]),[])
         self.assertEqual(LongestIncreasingSubsequence(range(10,0,-1)),[1])
         self.assertEqual(LongestIncreasingSubsequence(range(10)),

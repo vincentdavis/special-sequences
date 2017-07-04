@@ -5,7 +5,7 @@ from seqs.SortedSet import SortedSet
 
 
 class SortedSetTest(TestCase):
-    def testSortedSet(self):
+    def test_SortedSet(self):
         """Test whether SortedSet works correctly."""
         S = SortedSet()
         self.assertEqual(len(S),0)

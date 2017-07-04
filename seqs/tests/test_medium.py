@@ -8,7 +8,7 @@ class MediumTest(TestCase):
     threebits = [31 ^ x for x in twobits]
     M523 = BitvectorMedium(twobits + threebits, 5)
 
-    def testStates(self):
+    def test_States(self):
         """Check that iter(Medium) generates the correct set of states."""
         M = MediumTest.M523
         L1 = list(M)
@@ -17,7 +17,7 @@ class MediumTest(TestCase):
         L2.sort()
         self.assertEqual(L1, L2)
 
-    def testTokens(self):
+    def test_Tokens(self):
         """Check that Medium.tokens() generates the correct set of tokens."""
         M = MediumTest.M523
         toks = [(i, False) for i in range(5)] + [(i, True) for i in range(5)]
@@ -26,7 +26,7 @@ class MediumTest(TestCase):
             i, b = t
             self.assertEqual(M.reverse(t), (i, not b))
 
-    def testAction(self):
+    def test_Action(self):
         """Check that the action of the tokens is what we expect."""
         M = MediumTest.M523
         for x in M:
@@ -39,7 +39,7 @@ class MediumTest(TestCase):
                 else:
                     self.assertEqual(y, x ^ (1 << i))
 
-    def testRouting(self):
+    def test_Routing(self):
         """Check that RoutingTable finds paths that decrease Hamming dist."""
         M = MediumTest.M523
         R = RoutingTable(M)
@@ -50,7 +50,7 @@ class MediumTest(TestCase):
                     self.assertEqual((x ^ y) & (1 << i), 1 << i)
                     self.assertEqual((x >> i) & 1, not b)
 
-    def testExplicit(self):
+    def test_Explicit(self):
         """Check that ExplicitMedium looks the same as its argument."""
         M = MediumTest.M523
         E = ExplicitMedium(M)
@@ -62,7 +62,7 @@ class MediumTest(TestCase):
             for t in M.tokens():
                 self.assertEqual(M(s, t), E(s, t))
 
-    def testEmbed(self):
+    def test_Embed(self):
         """Check that HypercubeEmbedding finds appropriate coordinates."""
         M = MediumTest.M523
         E = HypercubeEmbedding(M)
@@ -79,7 +79,7 @@ class MediumTest(TestCase):
             for y in M:
                 self.assertEqual(ham(x, y), ham(E[x], E[y]))
 
-    def testGraph(self):
+    def test_Graph(self):
         """Check that LabeledGraphMedium(StateTransitionGraph(M)) = M."""
         M = MediumTest.M523
         L = LabeledGraphMedium(StateTransitionGraph(M))
