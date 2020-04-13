@@ -36,7 +36,7 @@ class RegularLanguage(object):
     def __init__(self, arg):
         if isinstance(arg, FiniteAutomaton):
             self.recognizer = arg
-        elif isinstance(arg, (str, unicode)):
+        elif isinstance(arg, (str, str)):
             self.recognizer = RegExp(arg)
         else:
             raise LanguageError("Unrecognized constructor for RegularLanguage")
