@@ -1,4 +1,3 @@
-
 from unittest import TestCase
 
 from seqs.SortedSet import SortedSet
@@ -8,14 +7,14 @@ class SortedSetTest(TestCase):
     def test_SortedSet(self):
         """Test whether SortedSet works correctly."""
         S = SortedSet()
-        self.assertEqual(len(S),0)
+        self.assertEqual(len(S), 0)
         S.add(1)
         S.add(4)
         S.add(2)
         S.add(9)
         S.add(3)
-        self.assertEqual(list(S),[1,2,3,4,9])
-        self.assertEqual(len(S),5)
+        self.assertEqual(list(S), [1, 2, 3, 4, 9])
+        self.assertEqual(len(S), 5)
         S.remove(4)
         S.add(6)
         S.add(5)
@@ -24,5 +23,5 @@ class SortedSetTest(TestCase):
         S.remove(1)
         S.remove(2)
         S.add(1)
-        self.assertEqual(list(S),[1,3,5,7,9])
-        self.assertEqual(list(SortedSet([1,3,6,7])),[1,3,6,7])
+        self.assertEqual(list(S), [1, 3, 5, 7, 9])
+        self.assertEqual(list(SortedSet([1, 3, 6, 7])), [1, 3, 6, 7])

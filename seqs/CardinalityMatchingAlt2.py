@@ -10,7 +10,7 @@ from seqs.Util import arbitrary_item
 from seqs.UnionFind import UnionFind
 
 
-def matching(G, initialMatching=None):
+def matching(G, initial_matching=None):
     """Find a maximum cardinality matching in a graph G.
     G is represented in modified GvR form: iter(G) lists its vertices;
     iter(G[v]) lists the neighbors of v; w in G[v] tests adjacency.
@@ -25,7 +25,7 @@ def matching(G, initialMatching=None):
 
     # Copy initial matching so we can use it nondestructively
     # and augment it greedily to reduce main loop iterations
-    matching = greedyMatching(G, initialMatching)
+    a_matching = greedyMatching(G, initial_matching)
 
     def augment():
         """Search for a single augmenting path.
@@ -100,9 +100,9 @@ def matching(G, initialMatching=None):
                     path += vs
                     start = w
                 path.append(start)
-                if start not in matching:
+                if start not in a_matching:
                     return path  # reached top of structure tree, done!
-                tnode = matching[start]
+                tnode = a_matching[start]
                 path.append(tnode)
                 if tnode == goal:
                     return path  # finished recursive subpath
@@ -113,8 +113,8 @@ def matching(G, initialMatching=None):
             path = alternatingPath(v)
             path.reverse()
             for i in range(0, len(path) - 1, 2):
-                matching[path[i]] = path[i + 1]
-                matching[path[i + 1]] = path[i]
+                a_matching[path[i]] = path[i + 1]
+                a_matching[path[i + 1]] = path[i]
 
         def addMatch(v, w):
             """Here with an S-S edge vw connecting vertices in different structure trees.
@@ -122,8 +122,8 @@ def matching(G, initialMatching=None):
             """
             alternate(v)
             alternate(w)
-            matching[v] = w
-            matching[w] = v
+            a_matching[v] = w
+            a_matching[w] = v
 
         def ss(v, w):
             """Handle detection of an S-S edge in augmenting path search.
@@ -170,7 +170,7 @@ def matching(G, initialMatching=None):
         # Start of main augmenting path search code.
 
         for v in G:
-            if v not in matching:
+            if v not in a_matching:
                 S[v] = v
                 unexplored.append(v)
 
@@ -186,7 +186,7 @@ def matching(G, initialMatching=None):
 
                 elif w not in T:  # previously unexplored node, add as T-node
                     T[w] = v
-                    u = matching[w]
+                    u = a_matching[w]
                     if leader[u] not in S:
                         S[u] = w  # and add its match as an S-node
                         unexplored.append(u)
@@ -197,10 +197,10 @@ def matching(G, initialMatching=None):
     while augment():
         pass
 
-    return matching
+    return a_matching
 
 
-def greedyMatching(G, initialMatching=None):
+def greedyMatching(G: object, initial_matching: object = None) -> object:
     """Near-linear-time greedy heuristic for creating high-cardinality matching.
     If there is any vertex with one unmatched neighbor, we match it.
     Otherwise, if there is a vertex with two unmatched neighbors, we contract
@@ -209,10 +209,10 @@ def greedyMatching(G, initialMatching=None):
     """
 
     # Copy initial matching so we can use it nondestructively
-    matching = {}
-    if initialMatching:
-        for x in initialMatching:
-            matching[x] = initialMatching[x]
+    a_matching = {}
+    if initial_matching:
+        for x in initial_matching:
+            a_matching[x] = initial_matching[x]
 
     # Copy graph to new subgraph of available edges
     # Representation: nested dictionary rep->rep->pair
@@ -221,16 +221,16 @@ def greedyMatching(G, initialMatching=None):
     avail = {}
     has_edge = False
     for v in G:
-        if v not in matching:
+        if v not in a_matching:
             avail[v] = {}
             for w in G[v]:
-                if w not in matching:
+                if w not in a_matching:
                     avail[v][w] = (v, w)
                     has_edge = True
             if not avail[v]:
                 del avail[v]
     if not has_edge:
-        return matching
+        return a_matching
 
     # make sets of degree one and degree two vertices
     deg1 = {v for v in avail if len(avail[v]) == 1}
@@ -253,16 +253,21 @@ def greedyMatching(G, initialMatching=None):
     def addMatch(v, w):
         """Add edge connecting two given cluster reps, update avail."""
         p, q = avail[v][w]
-        matching[p] = q
-        matching[q] = p
+        a_matching[p] = q
+        a_matching[q] = p
         for x in avail[v].keys():
             if x != w:
                 del avail[x][v]
                 updateDegree(x)
+        print(f"just before error: {avail[w].keys()}")
         for x in avail[w].keys():
+            print(f"What is there: {avail[w].keys()}")
             if x != v:
+                print(avail)
+                print(x, w)
                 del avail[x][w]
                 updateDegree(x)
+                print("after update: {}".format(avail[w].keys()))
         avail[v] = avail[w] = {}
         updateDegree(v)
         updateDegree(w)
@@ -287,8 +292,8 @@ def greedyMatching(G, initialMatching=None):
         updateDegree(w)
 
     # loop adding edges or contracting deg2 clusters
-    while avail:
-        # print("avail is: {}".format(avail))
+    while len(avail) > 0:
+        print("avail before addmatch: {}".format(avail))
         if deg1:
             v = arbitrary_item(deg1)
             w = arbitrary_item(avail[v])
@@ -305,11 +310,14 @@ def greedyMatching(G, initialMatching=None):
             if avail[v]:
                 w = arbitrary_item(avail[v])
                 addMatch(v, w)
+        print("avail after  addmatch: {}".format(avail))
 
     # at this point the edges listed in d2edges form a matchable tree
     # repeat the degree one part of the algorithm only on those edges
     avail = {}
-    d2edges = [(u, v) for u, v in d2edges if u not in matching and v not in matching]
+    d2edges = [
+        (u, v) for u, v in d2edges if u not in a_matching and v not in a_matching
+    ]
     for u, v in d2edges:
         avail[u] = {}
         avail[v] = {}
@@ -321,4 +329,4 @@ def greedyMatching(G, initialMatching=None):
         w = arbitrary_item(avail[v])
         addMatch(v, w)
 
-    return matching
+    return a_matching

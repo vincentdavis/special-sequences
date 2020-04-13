@@ -32,7 +32,7 @@ D. Eppstein, April 2009.
 """
 
 from seqs.Graphs import copyGraph
-from seqs.Not import Not,SymbolicNegation
+from seqs.Not import Not, SymbolicNegation
 
 from seqs.AcyclicReachability import Reachability
 from seqs.StrongConnectivity import Condensation
@@ -50,14 +50,15 @@ def Symmetrize(G):
     """
     H = copyGraph(G)
     for v in G:
-        H.setdefault(Not(v),set())  # make sure all negations are included
+        H.setdefault(Not(v), set())  # make sure all negations are included
         for w in G[v]:
-            H.setdefault(w,set())   # as well as all implicants
-            H.setdefault(Not(w),set()) # and negated implicants
+            H.setdefault(w, set())  # as well as all implicants
+            H.setdefault(Not(w), set())  # and negated implicants
     for v in G:
         for w in G[v]:
             H[Not(w)].add(Not(v))
     return H
+
 
 def Satisfiable(G):
     """Does this 2SAT instance have a satisfying assignment?"""
@@ -67,6 +68,7 @@ def Satisfiable(G):
             if Not(v) in C:
                 return False
     return True
+
 
 def Forced(G):
     """Find forced values for variables in a 2SAT instance.
@@ -86,13 +88,12 @@ def Forced(G):
             Map[v] = SCC
     Reach = Reachability(Con)
     for v in Sym:
-        if Reach.reachable(Map[v],Map[Not(v)]): # v implies not v?
+        if Reach.reachable(Map[v], Map[Not(v)]):  # v implies not v?
             value = False
-            if isinstance(v,SymbolicNegation):
+            if isinstance(v, SymbolicNegation):
                 v = Not(v)
                 value = True
             if v in Force:  # already added by negation?
                 return None
             Force[v] = value
     return Force
-

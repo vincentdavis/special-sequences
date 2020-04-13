@@ -85,7 +85,7 @@ def PartialCubeEdgeLabeling(G):
         for v in CG:
             for w in CG[v]:
                 diff = bitvec[v] ^ bitvec[w]
-                if not diff or bitvec[w] & ~ bitvec[v] == 0:
+                if not diff or bitvec[w] & ~bitvec[v] == 0:
                     continue  # zero edge or wrong direction
                 if diff not in neighbors:
                     raise Medium.MediumError("multiply-labeled edge")

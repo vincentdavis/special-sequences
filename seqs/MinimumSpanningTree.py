@@ -30,9 +30,8 @@ def MinimumSpanningTree(G):
     # part (the sort) is sped up by being built in to Python.
     subtrees = UnionFind()
     tree = []
-    for W,u,v in sorted((G[u][v],u,v) for u in G for v in G[u]):
+    for W, u, v in sorted((G[u][v], u, v) for u in G for v in G[u]):
         if subtrees[u] != subtrees[v]:
-            tree.append((u,v))
-            subtrees.union(u,v)
-    return tree        
-
+            tree.append((u, v))
+            subtrees.union(u, v)
+    return tree

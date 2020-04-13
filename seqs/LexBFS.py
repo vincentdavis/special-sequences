@@ -31,5 +31,5 @@ def LexBFS(G):
         P.remove(v)
         if not set:
             S.remove(set)
-        for new,old in P.refine(G[v]):
-            S.insertBefore(old,new)
+        for new, old in P.refine(G[v]):
+            S.insertBefore(old, new)

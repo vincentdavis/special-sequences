@@ -1,5 +1,12 @@
 from unittest import TestCase
-from seqs.Medium import BitvectorMedium, RoutingTable, ExplicitMedium, HypercubeEmbedding, LabeledGraphMedium, StateTransitionGraph
+from seqs.Medium import (
+    BitvectorMedium,
+    RoutingTable,
+    ExplicitMedium,
+    HypercubeEmbedding,
+    LabeledGraphMedium,
+    StateTransitionGraph,
+)
 
 
 class MediumTest(TestCase):

@@ -67,5 +67,4 @@ def OddCore(G):
     Subgraph of vertices and edges that participate in odd cycles.
     Aka, the union of nonbipartite biconnected components.
     """
-    return Graphs.union(*[C for C in BiconnectedComponents(G)
-                          if not isBipartite(C)])
+    return Graphs.union(*[C for C in BiconnectedComponents(G) if not isBipartite(C)])

@@ -14,6 +14,7 @@ from seqs.Graphs import copyGraph, isUndirected
 #     Main reduction algorithm for D3 reducible graphs
 # ============================================================
 
+
 def isK4(G):
     """Is this graph K4?"""
     if len(G) != 4:
@@ -23,7 +24,8 @@ def isK4(G):
             return False
     return True
 
-def D3reducible(G,triangleHooks=None,pathHooks=None,finalize=isK4):
+
+def D3reducible(G, triangleHooks=None, pathHooks=None, finalize=isK4):
     """Test if the graph G is D3-reducible.
 
     Whenever a reduction is found, the hook functions are
@@ -47,45 +49,45 @@ def D3reducible(G,triangleHooks=None,pathHooks=None,finalize=isK4):
         pathHooks = []
     if not isUndirected(G):
         raise TypeError("Argument to D3reducible must be an undirected graph")
-    G = copyGraph(G)        # We are going to change G, so make a copy of it
+    G = copyGraph(G)  # We are going to change G, so make a copy of it
     C = {v for v in G if len(G[v]) == 3}  # Active vertices, init. all w/deg=3
 
-    def otherNeighbor(u,v,w):
+    def otherNeighbor(u, v, w):
         """Other neighbor of v given known neighbors u,w"""
         return [x for x in G[v] if x != u and x != w][0]
 
-    def triangle(u,v,w):
+    def triangle(u, v, w):
         """Try a D3a reduction."""
         # u, v, and w are known to form a triangle but we still need to
         # check whether they have distinct neighbors."""
-        Nu = otherNeighbor(v,u,w)
-        Nv = otherNeighbor(u,v,w)
-        Nw = otherNeighbor(u,w,v)
+        Nu = otherNeighbor(v, u, w)
+        Nv = otherNeighbor(u, v, w)
+        Nw = otherNeighbor(u, w, v)
         if Nu == Nv or Nv == Nw or Nu == Nw:
-            return      # Need to have three distinct neighbors
-        x = object()    # Cons up an id for the triangle
+            return  # Need to have three distinct neighbors
+        x = object()  # Cons up an id for the triangle
 
         # Run the hooks
         for hook in triangleHooks:
-            if not hook(u,v,w,Nu,Nv,Nw,x):
+            if not hook(u, v, w, Nu, Nv, Nw, x):
                 return False
 
         # Make the change!
-        del G[u],G[v],G[w]
+        del G[u], G[v], G[w]
         G[Nu].remove(u)
         G[Nv].remove(v)
         G[Nw].remove(w)
-        G[x] = {Nu,Nv,Nw}
+        G[x] = {Nu, Nv, Nw}
         G[Nu].add(x)
         G[Nv].add(x)
         G[Nw].add(x)
 
         # Update the active vertices
-        for z in (x,Nu,Nv,Nw):
+        for z in (x, Nu, Nv, Nw):
             if len(G[z]) == 3:
                 C.add(z)
-    
-    def path(u,v,w):
+
+    def path(u, v, w):
         """Try a D3b reduction."""
         # u, v, and w are known to induce a path but we still need to
         # check whether they have a common neighbor as apex."""
@@ -96,9 +98,9 @@ def D3reducible(G,triangleHooks=None,pathHooks=None,finalize=isK4):
 
         # Run the hooks
         for hook in pathHooks:
-            if not hook(u,v,w,apex):
+            if not hook(u, v, w, apex):
                 return False
-        
+
         # Make the change!
         del G[v]
         G[u].remove(v)
@@ -106,34 +108,35 @@ def D3reducible(G,triangleHooks=None,pathHooks=None,finalize=isK4):
         G[apex].remove(v)
         G[u].add(w)
         G[w].add(u)
-        
+
         # Update the active vertices
         if len(G[apex]) == 3:
             C.add(apex)
         pass
 
-    def reduce(u,v,w):
+    def reduce(u, v, w):
         """Try a reduction in which v is the middle vertex"""
-        for x in (u,v,w):
+        for x in (u, v, w):
             if x not in G or len(G[x]) != 3:
-                return      # No longer in G or not all degree 3, no redux
+                return  # No longer in G or not all degree 3, no redux
         if w in G[u]:
-            triangle(u,v,w)
+            triangle(u, v, w)
         else:
-            path(u,v,w)
-    
+            path(u, v, w)
+
     while C:
         v = C.pop()
         if v in G and len(G[v]) == 3:
-            p,q,r = tuple(G[v])     # Decode set of neighbors
-            reduce(p,v,q)
-            reduce(p,v,r)
-            reduce(q,v,r)
+            p, q, r = tuple(G[v])  # Decode set of neighbors
+            reduce(p, v, q)
+            reduce(p, v, r)
+            reduce(q, v, r)
 
     # Now check whether we found K4
     return finalize(G)
 
-def reconstructD3(G,initialize,triangle,path,recognizer=D3reducible):
+
+def reconstructD3(G, initialize, triangle, path, recognizer=D3reducible):
     """Recursively reconstruct a D3-reducible graph G
     by inverting the reductions used to recognize it.
     
@@ -155,20 +158,20 @@ def reconstructD3(G,initialize,triangle,path,recognizer=D3reducible):
       (respectively) as the triangle and path hooks from the
       reductions, but are called in the opposite order to
       the order they are called in the reductions."""
-    
+
     calls = []
 
     def thook(*args):
-        calls.append((triangle,args))
+        calls.append((triangle, args))
         return True
 
     def phook(*args):
-        calls.append((path,args))
+        calls.append((path, args))
         return True
 
-    recognizer(G,[thook],[phook],initialize)
+    recognizer(G, [thook], [phook], initialize)
     calls.reverse()
-    for fun,args in calls:
+    for fun, args in calls:
         fun(*args)
 
 
@@ -176,7 +179,8 @@ def reconstructD3(G,initialize,triangle,path,recognizer=D3reducible):
 #     Additional reduction rules for Halin graphs
 # ============================================================
 
-def isOuterK4(G,outer):
+
+def isOuterK4(G, outer):
     """Have we reduced to a K4 with a non-outer vertex?"""
     if not isK4(G):
         return False
@@ -185,7 +189,8 @@ def isOuterK4(G,outer):
             return True
     return False
 
-def isHalin(G,triangleHooks=None,pathHooks=None,finalize=isOuterK4):
+
+def isHalin(G, triangleHooks=None, pathHooks=None, finalize=isOuterK4):
     """Test if the graph G is Halin.
     The two hook arguments are the same as for D3reducible,
     but the finalize argument takes two parameters:
@@ -195,76 +200,77 @@ def isHalin(G,triangleHooks=None,pathHooks=None,finalize=isOuterK4):
         triangleHooks = []
     if pathHooks is None:
         pathHooks = []
-    outer = set()           # Vertices that must be on the outer face
-    
-    def triangle(u,v,w,Nu,Nv,Nw,x):
+    outer = set()  # Vertices that must be on the outer face
+
+    def triangle(u, v, w, Nu, Nv, Nw, x):
         """Check and recolor vertices for triangle reduction"""
         if u in outer and v in outer and w in outer:
-            return False    # Can't collapse when all three are outer
-        for p,q in ((u,Nu),(v,Nv),(w,Nw)):
+            return False  # Can't collapse when all three are outer
+        for p, q in ((u, Nu), (v, Nv), (w, Nw)):
             if p in outer:
-                outer.add(q) # Mark neighbors of outer as outer
-        outer.add(x)         # As well as the new supervertex
+                outer.add(q)  # Mark neighbors of outer as outer
+        outer.add(x)  # As well as the new supervertex
         return True
 
-    def path(u,v,w,x):
+    def path(u, v, w, x):
         """Check and recolor vertices for path reduction"""
         if x in outer:
-            return False    # Can't shorten path with outer apex
-        outer.add(u)        # Mark remaining path vertices as outer
+            return False  # Can't shorten path with outer apex
+        outer.add(u)  # Mark remaining path vertices as outer
         outer.add(w)
         return True
 
     def final(H):
         """Have we reduced to a K4 with only one outer face?"""
-        return finalize(H,outer)
+        return finalize(H, outer)
 
-    return D3reducible(G,[triangle]+triangleHooks,
-                       [path]+pathHooks,final)
+    return D3reducible(G, [triangle] + triangleHooks, [path] + pathHooks, final)
+
 
 def HalinLeafVertices(G):
     """Reconstruct the leaf cycle of Halin graph G.
     The cycle is returned as a set of its vertices."""
-    
+
     outer = set()
-    def initialize(H,marked):
+
+    def initialize(H, marked):
         """Augment outer to include all outer vertices"""
-        if not isOuterK4(H,marked):
+        if not isOuterK4(H, marked):
             raise TypeError("Argument to HalinLeafVertices must be Halin")
         for v in H:
             if v not in marked:
                 for w in H:
                     if v != w:
-                        outer.add(w)    # outerize everything but v
+                        outer.add(w)  # outerize everything but v
                 break
 
     def triangle(u, v, w, Nu, Nv, Nw, x):
         """Undo a D3a reduction"""
         nout = 0
-        for (p,q) in ((u,Nu),(v,Nv),(w,Nw)):
+        for (p, q) in ((u, Nu), (v, Nv), (w, Nw)):
             if q in outer:
                 outer.add(p)
                 nout += 1
         assert nout == 2
 
-    def path(u,v,w,x):
+    def path(u, v, w, x):
         """Undo a D3b reduction"""
         assert x not in outer
         outer.add(u)
         outer.add(v)
         outer.add(w)
 
-    reconstructD3(G,initialize,triangle,path,isHalin)
-    return outer & set(iter(G))     # Find all marked vertices
-
+    reconstructD3(G, initialize, triangle, path, isHalin)
+    return outer & set(iter(G))  # Find all marked vertices
 
 
 # ============================================================
 #     Hamiltonian cycle
 # ============================================================
 
+
 def D3HamiltonianCycle(G):
-    ham = {}                # Where to put the Hamiltonian cycle
+    ham = {}  # Where to put the Hamiltonian cycle
 
     def initialize(H):
         """Start a Hamiltonian cycle on a K4"""
@@ -272,15 +278,15 @@ def D3HamiltonianCycle(G):
             raise TypeError("Argument to D3HamiltonianCycle not D3 reducible")
         C = list(H)
         for i in range(4):
-            ham[C[i-1]] = {C[i-2],C[i]}
+            ham[C[i - 1]] = {C[i - 2], C[i]}
 
-    def triangle(u,v,w,Nu,Nv,Nw,x):
+    def triangle(u, v, w, Nu, Nv, Nw, x):
         """Undo D3a reduction on Hamiltonian cycle"""
         # Permute so the missing edge in the Hamiltonian cycle is Nw-x
         if Nu not in ham[x]:
-            u,Nu,w,Nw = w,Nw,u,Nu
+            u, Nu, w, Nw = w, Nw, u, Nu
         elif Nv not in ham[x]:
-            v,Nv,w,Nw = w,Nw,v,Nv
+            v, Nv, w, Nw = w, Nw, v, Nv
         assert w not in ham[x]
 
         # Out with the old, in with the new
@@ -289,20 +295,21 @@ def D3HamiltonianCycle(G):
         ham[Nu].add(u)
         ham[Nv].remove(x)
         ham[Nv].add(v)
-        ham[u] = {Nu,w}
-        ham[w] = {u,v}
-        ham[v] = {w,Nv}
+        ham[u] = {Nu, w}
+        ham[w] = {u, v}
+        ham[v] = {w, Nv}
 
-    def path(u,v,w,x):
+    def path(u, v, w, x):
         """Undo D3b reduction on Hamiltonian cycle"""
-        if w not in ham[u]: w = x    # Permute so w is a ham-neighbor of u
+        if w not in ham[u]:
+            w = x  # Permute so w is a ham-neighbor of u
         ham[u].remove(w)
         ham[u].add(v)
         ham[w].remove(u)
         ham[w].add(v)
-        ham[v] = {u,w}
+        ham[v] = {u, w}
 
-    reconstructD3(G,initialize,triangle,path)
+    reconstructD3(G, initialize, triangle, path)
     return ham
 
 
@@ -310,21 +317,28 @@ def D3HamiltonianCycle(G):
 #     Additional reduction rules for other graph classes
 # ============================================================
 
-def isDual3Tree(G,triangleHooks=None,pathHooks=None,finalize=isK4):
+
+def isDual3Tree(G, triangleHooks=None, pathHooks=None, finalize=isK4):
     """Test if the graph G is the dual of a 3-tree."""
     if triangleHooks is None:
         triangleHooks = []
     if pathHooks is None:
         pathHooks = []
-    def noPath(u,v,w,x): return False
-    return D3reducible(G,triangleHooks,[noPath],finalize)
 
-def isWheel(G,triangleHooks=None,pathHooks=None,finalize=isK4):
+    def noPath(u, v, w, x):
+        return False
+
+    return D3reducible(G, triangleHooks, [noPath], finalize)
+
+
+def isWheel(G, triangleHooks=None, pathHooks=None, finalize=isK4):
     """Test if the graph G is a wheel."""
     if triangleHooks is None:
         triangleHooks = []
     if pathHooks is None:
         pathHooks = []
-    def noTriangle(u,v,w,Nu,Nv,Nw,x): return False
-    return D3reducible(G,[noTriangle],pathHooks,finalize)
 
+    def noTriangle(u, v, w, Nu, Nv, Nw, x):
+        return False
+
+    return D3reducible(G, [noTriangle], pathHooks, finalize)

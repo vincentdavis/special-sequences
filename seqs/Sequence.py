@@ -7,7 +7,8 @@ D. Eppstein, November 2003.
 """
 
 
-class SequenceError(Exception): pass
+class SequenceError(Exception):
+    pass
 
 
 class Sequence(object):
@@ -63,7 +64,7 @@ class Sequence(object):
         output = []
         for x in self:
             output.append(repr(x))
-        return 'Sequence([' + ','.join(output) + '])'
+        return "Sequence([" + ",".join(output) + "])"
 
     def key(self, x):
         """Apply supplied key function."""

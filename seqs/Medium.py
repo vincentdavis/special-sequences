@@ -27,7 +27,9 @@ from seqs.Graphs import isUndirected
 from seqs.DFS import search, nontree, forward, reverse
 
 
-class MediumError(ValueError): pass
+class MediumError(ValueError):
+    pass
+
 
 class Medium(object):
     """
@@ -51,21 +53,21 @@ class Medium(object):
     def __iter__(self):
         """Generate sequence of medium states."""
         return self.states()
-    
-    def __len__(self):
+
+    def __len__(self) -> int:
         """Return number of states in the medium."""
         i = 0
         for S in self.states():
             i += 1
         return i
 
-    def __getitem__(self,S):
+    def __getitem__(self, S) -> dict:
         """Construct dict mapping tokens to actions from state S."""
-        return {t:self.action(S,t) for t in self.tokens()}
+        return {t: self.action(S, t) for t in self.tokens()}
 
-    def __call__(self,S,t):
+    def __call__(self, S, t):
         """Apply token t to state S."""
-        return self.action(S,t)
+        return self.action(S, t)
 
 
 class ExplicitMedium(Medium):
@@ -76,10 +78,10 @@ class ExplicitMedium(Medium):
     (# states) x (# tokens) but it makes all operations fast.
     """
 
-    def __init__(self,M):
+    def __init__(self, M):
         """Form ExplicitMedium from any other kind of medium."""
-        self._reverse = {t:M.reverse(t) for t in M.tokens()}
-        self._action = {S:M[S] for S in M}
+        self._reverse = {t: M.reverse(t) for t in M.tokens()}
+        self._action = {S: M[S] for S in M}
 
     # Basic classes needed to define any medium
 
@@ -89,10 +91,10 @@ class ExplicitMedium(Medium):
     def tokens(self):
         return iter(self._reverse)
 
-    def reverse(self,t):
+    def reverse(self, t):
         return self._reverse[t]
 
-    def action(self,S,t):
+    def action(self, S, t):
         return self._action[S][t]
 
     # Faster implementation of other medium functions
@@ -100,7 +102,7 @@ class ExplicitMedium(Medium):
     def __len__(self):
         return len(self._action)
 
-    def __getitem__(self,S):
+    def __getitem__(self, S):
         return self._action[S]
 
 
@@ -119,36 +121,36 @@ class BitvectorMedium(Medium):
     distance between the vectors.
     """
 
-    def __init__(self,states,L):
+    def __init__(self, states, L):
         """Initialize medium for set states and bitvector length L."""
         self._states = set(states)
         self._veclen = L
-    
+
     def states(self):
         return iter(self._states)
 
     def tokens(self):
         for i in range(self._veclen):
-            yield i,False
-            yield i,True
+            yield i, False
+            yield i, True
 
-    def reverse(self,t):
-        i,b = t
-        return i,not b
+    def reverse(self, t):
+        i, b = t
+        return i, not b
 
-    def action(self,S,t):
+    def action(self, S, t):
         """
         Compute the action of token t on state S.
         We form the bitvector V that should correspond to St,
         then test whether V belongs to the given set of states.
         If so, we return it; otherwise, we return S itself.
         """
-        i,b = t
-        mask = 1<<i
+        i, b = t
+        mask = 1 << i
         if b:
             V = S | mask
         else:
-            V = S &~ mask
+            V = S & ~mask
         if V in self._states:
             return V
         else:
@@ -161,13 +163,15 @@ def StateTransitionGraph(M):
     If s is a state of M, G[s] will provide a dictionary mapping
     the neighbors of s to the actions that produced those neighbors.
     """
-    G = {S:{} for S in M}
+    G = {S: {} for S in M}
     for S in M:
         for t in M.tokens():
-            St = M(S,t)
+            St = M(S, t)
             if St != S:
                 if St in G[S]:
-                    raise MediumError("multiple adjacency from {0!s} to {1!s}".format(S, St))
+                    raise MediumError(
+                        "multiple adjacency from {0!s} to {1!s}".format(S, St)
+                    )
                 G[S][St] = t
     return G
 
@@ -180,16 +184,19 @@ class LabeledGraphMedium(Medium):
     LabeledGraphMedium(StateTransitionGraph(M)) should result
     in a medium with the same behavior as M itself.
     """
-    def __init__(self,G):
+
+    def __init__(self, G):
         if not isUndirected(G):
             raise MediumError("not an undirected graph")
-        self._action = {v:{} for v in G}
+        self._action = {v: {} for v in G}
         self._reverse = {}
         for v in G:
             for w in G[v]:
                 t = G[v][w]
                 if t in self._action[v]:
-                    raise MediumError("multiple edges for state {0!s} and token {1!s}".format(v, t))
+                    raise MediumError(
+                        "multiple edges for state {0!s} and token {1!s}".format(v, t)
+                    )
                 self._action[v][t] = w
                 if t not in self._reverse:
                     rt = G[w][v]
@@ -206,12 +213,12 @@ class LabeledGraphMedium(Medium):
     def tokens(self):
         return iter(self._reverse)
 
-    def reverse(self,t):
+    def reverse(self, t):
         return self._reverse[t]
 
-    def action(self,S,t):
-        return self._action[S].get(t,S)
-    
+    def action(self, S, t):
+        return self._action[S].get(t, S)
+
     def __len__(self):
         return len(self._action)
 
@@ -245,21 +252,23 @@ def RoutingTable(M):
     inactivated = object()  # flag object to mark inactive tokens
 
     # rest of data structure: point from states to list and list to states
-    activeForState = {S:-1 for S in M}
+    activeForState = {S: -1 for S in M}
     statesForPos = [[] for i in activeTokens]
-    
+
     def scan(S):
         """Find the next token that is effective for s."""
         i = activeForState[S]
         while True:
             i += 1
             if i >= len(activeTokens):
-                raise MediumError("no active token from {0!s} to {1!s}".format(S, current))
-            if activeTokens[i] != inactivated and M(S,activeTokens[i]) != S:
+                raise MediumError(
+                    "no active token from {0!s} to {1!s}".format(S, current)
+                )
+            if activeTokens[i] != inactivated and M(S, activeTokens[i]) != S:
                 activeForState[S] = i
                 statesForPos[i].append(S)
                 return
-    
+
     # set initial active states
     for S in M:
         if S != current:
@@ -268,16 +277,16 @@ def RoutingTable(M):
     # traverse the graph, maintaining active tokens
     visited = set()
     routes = {}
-    for prev,current,edgetype in search(G, initialState):
+    for prev, current, edgetype in search(G, initialState):
         if prev != current and edgetype != nontree:
             if edgetype == reverse:
-                prev,current = current,prev
-            
+                prev, current = current, prev
+
             # add token to end of list, point to it from old state
             activeTokens.append(G[prev][current])
             activeForState[prev] = len(activeTokens) - 1
             statesForPos.append([prev])
-            
+
             # inactivate reverse token, find new token for its states
             activeTokens[activeForState[current]] = inactivated
             for S in statesForPos[activeForState[current]]:
@@ -288,7 +297,7 @@ def RoutingTable(M):
             if current not in visited:
                 for S in M:
                     if S != current:
-                        routes[S,current] = activeTokens[activeForState[S]]
+                        routes[S, current] = activeTokens[activeForState[S]]
 
     return routes
 
@@ -299,15 +308,14 @@ def HypercubeEmbedding(M):
     tokmap = {}
     for t in M.tokens():
         if t not in tokmap:
-            tokmap[t] = tokmap[M.reverse(t)] = 1<<dim
+            tokmap[t] = tokmap[M.reverse(t)] = 1 << dim
             dim += 1
     embed = {}
     G = StateTransitionGraph(M)
-    for prev,current,edgetype in search(G):
+    for prev, current, edgetype in search(G):
         if edgetype == forward:
             if prev == current:
                 embed[current] = 0
             else:
                 embed[current] = embed[prev] ^ tokmap[G[prev][current]]
     return embed
-

@@ -37,5 +37,4 @@ class RegExpTest(TestCase):
         """test that different regular languages are recognized as different"""
         for i in range(len(self.languages)):
             for j in range(i):
-                self.assertNotEqual(self.languages[i][0],
-                                    self.languages[j][0])
+                self.assertNotEqual(self.languages[i][0], self.languages[j][0])

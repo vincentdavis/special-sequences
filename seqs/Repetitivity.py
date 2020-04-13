@@ -89,7 +89,7 @@ class NonrepetitiveGraph(object):
                 grouplen = 3
             else:
                 grouplen = 2
-            group = labels[n - grouplen:n]
+            group = labels[n - grouplen : n]
             for L1 in group:
                 for L2 in group:
                     if L1 != L2:

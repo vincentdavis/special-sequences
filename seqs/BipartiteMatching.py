@@ -81,7 +81,8 @@ def matching(graph):
                             return True
             return False
 
-        for v in unmatched: recurse(v)
+        for v in unmatched:
+            recurse(v)
 
 
 def imperfections(graph):
@@ -119,8 +120,10 @@ def imperfections(graph):
 
     imperfections = {}
     for v in graph:
-        imperfections[v] = {w: components[w, False] for w in graph[v]
-                            if M[w] != v and
-                            components[v, True] != components[w, False]}
+        imperfections[v] = {
+            w: components[w, False]
+            for w in graph[v]
+            if M[w] != v and components[v, True] != components[w, False]
+        }
 
     return imperfections

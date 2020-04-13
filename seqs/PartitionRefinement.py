@@ -8,7 +8,8 @@ D. Eppstein, November 2003.
 """
 
 
-class PartitionError(Exception): pass
+class PartitionError(Exception):
+    pass
 
 
 class PartitionRefinement(object):

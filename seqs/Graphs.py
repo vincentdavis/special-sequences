@@ -36,8 +36,11 @@ def GeneralizedCoxeterGraph(n, a, b):
 
 
 def CubeConnectedCycles(n):
-    return {(x, y): [(x, (y + 1) % n), (x, (y - 1) % n), (x ^ (1 << y), y)]
-            for x in range(1 << n) for y in range(n)}
+    return {
+        (x, y): [(x, (y + 1) % n), (x, (y - 1) % n), (x ^ (1 << y), y)]
+        for x in range(1 << n)
+        for y in range(n)
+    }
 
 
 def LCFNotation(L, n):
@@ -92,8 +95,7 @@ def InducedSubgraph(V, G, adjacency_list_type=set):
     """
     The subgraph consisting of all edges between pairs of vertices in V.
     """
-    return {x: adjacency_list_type(y for y in G[x] if y in V)
-            for x in G if x in V}
+    return {x: adjacency_list_type(y for y in G[x] if y in V) for x in G if x in V}
 
 
 def union(*graphs):

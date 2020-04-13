@@ -59,8 +59,7 @@ class BiconnectedComponents(DFS.Searcher):
 
     def backedge(self, source, destination):
         if self._dfsnumber[destination] < self._dfsnumber[source]:
-            self._low[source] = min(self._low[source],
-                                    self._dfsnumber[destination])
+            self._low[source] = min(self._low[source], self._dfsnumber[destination])
             self._ancestors[source].add(destination)
 
     def postorder(self, parent, child):
@@ -86,7 +85,8 @@ class BiconnectedComponents(DFS.Searcher):
         self._components.append(component)
 
 
-class NotBiconnected(Exception): pass
+class NotBiconnected(Exception):
+    pass
 
 
 class BiconnectivityTester(DFS.Searcher):
@@ -173,8 +173,7 @@ class stOrienter(DFS.Searcher):
 
     def backedge(self, source, destination):
         if self._dfsnumber[destination] < self._dfsnumber[source]:
-            self._low[source] = min(self._low[source],
-                                    self._dfsnumber[destination])
+            self._low[source] = min(self._low[source], self._dfsnumber[destination])
             if source != self._down[destination]:
                 self.addOrientation(destination, source, destination)
 

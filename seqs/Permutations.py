@@ -193,7 +193,9 @@ def Involutions(n):
     yield p
     for c in InvolutionChanges(n):
         x, y = p[c], p[c + 1]  # current partners of c and c+1
-        if x == c and y != c + 1: x = c + 1
-        if x != c and y == c + 1: y = c
+        if x == c and y != c + 1:
+            x = c + 1
+        if x != c and y == c + 1:
+            y = c
         p[x], p[y], p[c], p[c + 1] = c + 1, c, y, x  # swap partners
         yield p

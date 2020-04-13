@@ -7,18 +7,12 @@ D. Eppstein, UC Irvine, November 2003.
 """
 
 import operator
-import sys
-import unittest
 import re
-from seqs.Util import arbitrary_item
+import sys
+
 from seqs.PartitionRefinement import PartitionRefinement
 from seqs.Sequence import Sequence
-
-# Hack for Python 3 compatibility
-try:
-    unicode
-except:
-    unicode = str
+from seqs.Util import arbitrary_item
 
 
 class LanguageError(Exception):
@@ -59,10 +53,10 @@ class RegularLanguage(object):
         return not (self == other)
 
     def __le__(self, other):
-        return not (self & ~ other)
+        return not (self & ~other)
 
     def __ge__(self, other):
-        return not (other & ~ self)
+        return not (other & ~self)
 
     def __lt__(self, other):
         return self <= other and self != other
@@ -187,15 +181,17 @@ class DFA(FiniteAutomaton):
         state = self.initial
         for symbol in symbols:
             if symbol not in self.alphabet:
-                raise LanguageError("Symbol " + repr(symbol) +
-                                    " not in input alphabet")
+                raise LanguageError("Symbol " + repr(symbol) + " not in input alphabet")
             state = self.transition(state, symbol)
         return self.isfinal(state)
 
     def __eq__(self, other):
         """Report whether these two DFAs have equivalent states."""
-        if not isinstance(other, DFA) or len(self) != len(other) \
-                or self.alphabet != other.alphabet:
+        if (
+            not isinstance(other, DFA)
+            or len(self) != len(other)
+            or self.alphabet != other.alphabet
+        ):
             return False
         equivalences = {self.initial: other.initial}
         unprocessed = [self.initial]
@@ -253,12 +249,12 @@ class NFA(FiniteAutomaton):
             if not [c for c in self.alphabet if self.transition(state, c)]:
                 adjectives.append("terminal")
             if not adjectives:
-                print('ß>> {} , {}'.format(output, state))
+                print("ß>> {} , {}".format(output, state))
             else:
-                print('>> {} , {} ({})'.format(output, state, ", ".join(adjectives)))
+                print(">> {} , {} ({})".format(output, state, ", ".join(adjectives)))
             for c in self.alphabet:
                 for neighbor in self.transition(state, c):
-                    print('>> {} --[{}]--> {}'.format(output, str(c), neighbor))
+                    print(">> {} --[{}]--> {}".format(output, str(c), neighbor))
 
     def RegExp(self):
         """Convert to regular expression and return as a string.
@@ -276,15 +272,15 @@ class NFA(FiniteAutomaton):
                 expr[x, y] = None
         for x in self.states():
             if x in self.initial:
-                expr[initial, x] = ''
+                expr[initial, x] = ""
             if self.isfinal(x):
-                expr[x, final] = ''
-            expr[x, x] = ''
+                expr[x, final] = ""
+            expr[x, x] = ""
         for x in self.states():
             for c in self.alphabet:
                 for y in self.transition(x, c):
                     if expr[x, y]:
-                        expr[x, y] += '+' + str(c)
+                        expr[x, y] += "+" + str(c)
                     else:
                         expr[x, y] = str(c)
 
@@ -298,12 +294,12 @@ class NFA(FiniteAutomaton):
                         if expr[x, s]:
                             xsy += self._parenthesize(expr[x, s])
                         if expr[s, s]:
-                            xsy += self._parenthesize(expr[s, s], True) + ['*']
+                            xsy += self._parenthesize(expr[s, s], True) + ["*"]
                         if expr[s, y]:
                             xsy += self._parenthesize(expr[s, y])
                         if expr[x, y] is not None:
-                            xsy += ['+', expr[x, y] or '()']
-                        expr[x, y] = ''.join(xsy)
+                            xsy += ["+", expr[x, y] or "()"]
+                        expr[x, y] = "".join(xsy)
         return expr[initial, final]
 
     def _parenthesize(self, expr, starring=False):
@@ -312,12 +308,12 @@ class NFA(FiniteAutomaton):
         by omitting parentheses or other expression features when unnecessary;
         it would always be correct simply to return ['(',expr,')'].
         """
-        if len(expr) == 1 or (not starring and '+' not in expr):
+        if len(expr) == 1 or (not starring and "+" not in expr):
             return [expr]
-        elif starring and expr.endswith('+()'):
-            return ['(', expr[:-3], ')']  # +epsilon redundant when starring
+        elif starring and expr.endswith("+()"):
+            return ["(", expr[:-3], ")"]  # +epsilon redundant when starring
         else:
-            return ['(', expr, ')']
+            return ["(", expr, ")"]
 
 
 class _DFAfromNFA(DFA):
@@ -413,16 +409,16 @@ class RegExp(NFA):
 
     def base(self):
         """Parse a subexpression that can be starred: single letter or group."""
-        if self.pos == len(self.expr) or self.expr[self.pos] == ')':
+        if self.pos == len(self.expr) or self.expr[self.pos] == ")":
             return self.epsilon()
-        if self.expr[self.pos] == '(':
+        if self.expr[self.pos] == "(":
             self.pos += 1
             ret = self.expression()
-            if self.pos == len(self.expr) or self.expr[self.pos] != ')':
+            if self.pos == len(self.expr) or self.expr[self.pos] != ")":
                 raise LanguageError("Close paren expected at char " + str(self.pos))
             self.pos += 1
             return ret
-        if self.expr[self.pos] == '\\':
+        if self.expr[self.pos] == "\\":
             self.pos += 1
             if self.pos == len(self.expr):
                 raise re.error("Character expected after backslash")
@@ -435,7 +431,7 @@ class RegExp(NFA):
     def factor(self):
         """Parse a catenable expression: base or starred base."""
         initial, penultimate, epsilon = self.base()
-        while self.pos < len(self.expr) and self.expr[self.pos] == '*':
+        while self.pos < len(self.expr) and self.expr[self.pos] == "*":
             self.pos += 1
             for state in penultimate:
                 self.successor[state] |= initial
@@ -445,7 +441,7 @@ class RegExp(NFA):
     def term(self):
         """Parse a summable expression: factor or concatenation."""
         initial, penultimate, epsilon = self.factor()
-        while self.pos < len(self.expr) and self.expr[self.pos] not in ')+':
+        while self.pos < len(self.expr) and self.expr[self.pos] not in ")+":
             Fi, Fp, Fe = self.factor()
             for state in penultimate:
                 self.successor[state] |= Fi
@@ -461,7 +457,7 @@ class RegExp(NFA):
     def expression(self):
         """Parse a whole regular expression or grouped subexpression."""
         initial, penultimate, epsilon = self.term()
-        while self.pos < len(self.expr) and self.expr[self.pos] == '+':
+        while self.pos < len(self.expr) and self.expr[self.pos] == "+":
             self.pos += 1
             Ti, Tp, Te = self.term()
             initial = initial | Ti
@@ -496,8 +492,9 @@ def _RenumberNFA(N, offset=0):
     ttable = {}
     for state in N.states():
         for symbol in N.alphabet:
-            ttable[replacements[state], symbol] = [replacements[x]
-                                                   for x in N.transition(state, symbol)]
+            ttable[replacements[state], symbol] = [
+                replacements[x] for x in N.transition(state, symbol)
+            ]
     final = [replacements[x] for x in N.states() if N.isfinal(x)]
     return LookupNFA(N.alphabet, initial, ttable, final)
 
@@ -516,8 +513,7 @@ class _ProductDFA(DFA):
 
     def transition(self, state, symbol):
         s1, s2 = state
-        return self.D1.transition(s1, symbol), \
-               self.D2.transition(s2, symbol)
+        return self.D1.transition(s1, symbol), self.D2.transition(s2, symbol)
 
     def isfinal(self, state):
         s1, s2 = state

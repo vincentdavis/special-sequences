@@ -28,7 +28,7 @@ class StronglyConnectedComponents(DFS.Searcher):
     a sequence of subgraphs of G.
     """
 
-    def __init__(self,G):
+    def __init__(self, G):
         """Search for strongly connected components of graph G."""
 
         # set up data structures for DFS
@@ -54,13 +54,13 @@ class StronglyConnectedComponents(DFS.Searcher):
         """How many components are there?"""
         return len(self._components)
 
-    def _component(self,vertices):
+    def _component(self, vertices):
         """Make a new SCC."""
         vertices = set(vertices)
-        induced = {v:{w for w in self._graph[v] if w in vertices} for v in vertices}
+        induced = {v: {w for w in self._graph[v] if w in vertices} for v in vertices}
         self._components.append(induced)
 
-    def preorder(self,parent,child):
+    def preorder(self, parent, child):
         """Handle first visit to vertex in DFS search for components."""
         if parent == child:
             self._active = []
@@ -68,19 +68,20 @@ class StronglyConnectedComponents(DFS.Searcher):
         self._active.append(child)
         self._low[child] = self._dfsnumber[child] = len(self._dfsnumber)
 
-    def backedge(self,source,destination):
+    def backedge(self, source, destination):
         """Handle non-tree edge in DFS search for components."""
-        self._low[source] = min(self._low[source],self._low[destination])
+        self._low[source] = min(self._low[source], self._low[destination])
 
-    def postorder(self,parent,child):
+    def postorder(self, parent, child):
         """Handle last visit to vertex in DFS search for components."""
         if self._low[child] == self._dfsnumber[child]:
-            self._component(self._active[self._activelen[child]:])
+            self._component(self._active[self._activelen[child] :])
             for v in self._components[-1]:
                 self._low[v] = self._biglow
-            del self._active[self._activelen[child]:]
+            del self._active[self._activelen[child] :]
         else:
-            self._low[parent] = min(self._low[parent],self._low[child])
+            self._low[parent] = min(self._low[parent], self._low[child])
+
 
 def Condensation(G):
     """Return a DAG with vertices equal to sets of vertices in SCCs of G."""
@@ -96,4 +97,3 @@ def Condensation(G):
             if GtoC[v] != GtoC[w]:
                 components[GtoC[v]].add(GtoC[w])
     return components
-

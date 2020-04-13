@@ -26,7 +26,9 @@ def HamiltonianCycles(G):
     # In the copied graph G, G[v][w] is True when vw is an original edge
     # of the input, and False when it was produced by a contraction.
     if not G or not isUndirected(G) or maxDegree(G) > 3:
-        raise ValueError("HamiltonianCycles input must be undirected degree three graph")
+        raise ValueError(
+            "HamiltonianCycles input must be undirected degree three graph"
+        )
     if minDegree(G) < 2:
         return
     G = copyGraph(G, map_to_constant(True))
@@ -131,9 +133,13 @@ def HamiltonianCycles(G):
                 del forced_in_input[v][w], forced_in_input[w][v]
 
         actions.append(unforce)
-        return remove_third_leg(v) and remove_third_leg(w) and \
-               force_into_triangle(v, w) and force_into_triangle(w, v) and \
-               force_from_triangle(v, w)
+        return (
+            remove_third_leg(v)
+            and remove_third_leg(w)
+            and force_into_triangle(v, w)
+            and force_into_triangle(w, v)
+            and force_from_triangle(v, w)
+        )
 
     def force_into_triangle(v, w):
         """

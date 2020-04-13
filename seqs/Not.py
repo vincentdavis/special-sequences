@@ -18,31 +18,34 @@ D. Eppstein, April 2009.
 
 import unittest
 
-class DoubleNegationError(Exception): pass
+
+class DoubleNegationError(Exception):
+    pass
+
 
 class SymbolicNegation(object):
-    def __init__(self,x):
-        if isinstance(x,SymbolicNegation):
+    def __init__(self, x):
+        if isinstance(x, SymbolicNegation):
             raise DoubleNegationError(
-              "Use Not(x) rather than instantiating SymbolicNegation directly")
+                "Use Not(x) rather than instantiating SymbolicNegation directly"
+            )
         self.negation = x
 
     def negate(self):
         return self.negation
-        
+
     def __repr__(self):
         return "Not(" + repr(self.negation) + ")"
 
-    def __eq__(self,other):
-        return isinstance(other,SymbolicNegation) and \
-               self.negation == other.negation
+    def __eq__(self, other):
+        return isinstance(other, SymbolicNegation) and self.negation == other.negation
 
     def __hash__(self):
         return -hash(self.negation)
 
+
 def Not(x):
-    if isinstance(x,SymbolicNegation):
+    if isinstance(x, SymbolicNegation):
         return x.negate()
     else:
         return SymbolicNegation(x)
-
